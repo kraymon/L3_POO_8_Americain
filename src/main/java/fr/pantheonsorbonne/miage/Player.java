@@ -9,6 +9,7 @@ public class Player {
     }
 
     public void pickCard(int number){
+        System.out.println("hello world");
     }
 
     

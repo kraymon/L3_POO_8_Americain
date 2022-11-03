@@ -1,7 +1,5 @@
 package fr.pantheonsorbonne.miage;
 
-public package fr.pantheonsorbonne.cri;
-
 public class Card {
  
     private String couleur;
@@ -29,9 +27,5 @@ public class Card {
      this.couleur = couleur;
     }
 
-
-
-}
- {
     
 }
