@@ -12,7 +12,7 @@ public class Distribution {
 
     public static void createPacket(){
         for(int i =0;i<valeur.length;i++){
-            for(int j=0;i<couleur.length;j++){
+            for(int j=0;j<couleur.length;j++){
                 Card carte = new Card(valeur[i],couleur[j]);
                 packet.add(carte);
             }
