@@ -2,7 +2,11 @@ package fr.pantheonsorbonne.miage;
 
 public class Local {
     public static void main(String[] args){
-        Player moi = new Player("malik");
-        moi.pickCard(2);
+        Distribution.createPacket();
+
+        for(int i=0;i<Distribution.packet.size();i++){
+            System.out.println(Distribution.packet.get(i).getValeur()+" "+Distribution.packet.get(i).getCouleur());
+        }
+        
     }
 }
