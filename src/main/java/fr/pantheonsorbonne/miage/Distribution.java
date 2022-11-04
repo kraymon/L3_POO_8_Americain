@@ -8,6 +8,7 @@ public class Distribution {
     static String[] couleur = {"COEUR","CARREAU","PIQUE","TREFLE"};
     static String[] valeur = {"AS","ROI","DAME","VALET","DIX","NEUF","HUIT","SEPT","SIX","CINQ","QUATRE","TROIS","DEUX"};
     static LinkedList<Card> packet = new LinkedList<Card>();
+    static Random random = new Random();
     
 
     public static void createPacket(){
@@ -19,12 +20,11 @@ public class Distribution {
         }
     }
 
-    public ArrayList<Card> newRandomHand(){
-        Random random = new Random();
+    public static ArrayList<Card> newRandomHand(){
         ArrayList<Card> hand = new ArrayList<Card>();
 
         for(int i =0; i<8; i++){
-            int randomIndex = random.nextInt(52);
+            int randomIndex = random.nextInt(packet.size());
             hand.add(packet.get(randomIndex));
             packet.remove(randomIndex);
         }
@@ -34,8 +34,6 @@ public class Distribution {
 
     
     public static Card getRandomCard(){
-        Random random = new Random();
-
         int randomIndex = random.nextInt(packet.size());
         Card carte = packet.get(randomIndex);
         packet.remove(randomIndex);
