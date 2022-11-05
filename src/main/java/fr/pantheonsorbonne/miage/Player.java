@@ -17,7 +17,7 @@ public class Player {
 
     public void pickCard(int number) {
         for (int i = 0; i < number; i++) {
-            if(Distribution.packet.isEmpty()){
+            if(!Distribution.packet.isEmpty()){
             this.hand.add(Distribution.getRandomCard());
             }
             else{

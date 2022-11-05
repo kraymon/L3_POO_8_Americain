@@ -7,35 +7,40 @@ public class Local {
         Player malik = new Player("malik", Distribution.newRandomHand());
         Player ken = new Player("ken", Distribution.newRandomHand());
 
-        CarteJouer.firstCard();
-
-        while(!malik.getHand().isEmpty()||!ken.getHand().isEmpty()){
-            malik.playCard();
-            ken.playCard();
-        }
-
-        if(malik.getHand().isEmpty()){
-            System.out.println("malik gagnant");
-        }
-        else{
-            System.out.println("ken gagnant");
-        }
-
-
-        /* 
-        for(int i=0;i<Distribution.packet.size();i++){
-            System.out.println(Distribution.packet.get(i).getValeur()+" "+Distribution.packet.get(i).getCouleur());
-        }
-        
-        ArrayList<Card> main = Distribution.newRandomHand();
-        
+        System.out.println("Main de malik : ");
         for(int i = 0;i<malik.getHand().size();i++){
             System.out.println(malik.getHand().get(i).getValeur()+" "+malik.getHand().get(i).getCouleur());
         }
 
-        malik.pickCard(2);
+        System.out.println();
 
-        System.out.println(Distribution.packet.size());
-        */
+        System.out.println("Main de ken : ");
+        for(int i = 0;i<ken.getHand().size();i++){
+            System.out.println(ken.getHand().get(i).getValeur()+" "+ken.getHand().get(i).getCouleur());
+        }
+        
+        System.out.println();
+
+
+
+        CarteJouer.firstCard();
+        while(true){
+
+            System.out.println(CarteJouer.playedCard.get(CarteJouer.playedCard.size()-1).getValeur()+" "+CarteJouer.playedCard.get(CarteJouer.playedCard.size()-1).getCouleur());
+            malik.playCard();
+            if(malik.getHand().isEmpty()){
+                System.out.println("malik gagne");
+                break;
+            }
+            System.out.println(CarteJouer.playedCard.get(CarteJouer.playedCard.size()-1).getValeur()+" "+CarteJouer.playedCard.get(CarteJouer.playedCard.size()-1).getCouleur());
+
+            ken.playCard();
+            if(ken.getHand().isEmpty()){
+                System.out.println("ken gagne");
+                break;
+            }
+
+        }
+       
     }
 }
