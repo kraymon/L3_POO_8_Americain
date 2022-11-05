@@ -7,9 +7,7 @@ public class CarteJouer {
     Random random = new Random();
 
     public void firstCard(){
-        int randomIndex = random.nextInt(52);
-        Card carte = Distribution.packet.get(randomIndex);
-        Distribution.packet.remove(randomIndex);
-        playedCard.add(carte);
+        playedCard.add(Distribution.getRandomCard());
     }
+    
 }

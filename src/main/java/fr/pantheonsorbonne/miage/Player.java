@@ -17,8 +17,38 @@ public class Player {
 
     public void pickCard(int number) {
         for (int i = 0; i < number; i++) {
+            if(Distribution.packet.isEmpty()){
             this.hand.add(Distribution.getRandomCard());
+            }
+            else{
+                int initialSize = CarteJouer.playedCard.size()-1;
+                for(int j = 0;j<initialSize;j++){
+                    Distribution.packet.add(CarteJouer.playedCard.get(0));
+                    CarteJouer.playedCard.remove(0);
+            }
+                
+                CarteJouer.playedCard.add(Distribution.packet.get(Distribution.packet.size()-1));
+                number++;
+            }
         }
+    }
+
+    public void playCard(){
+        Card lastPlayedCard = CarteJouer.playedCard.get(CarteJouer.playedCard.size()-1);
+        String lastColor = lastPlayedCard.getCouleur();
+        String lastValue = lastPlayedCard.getValeur();
+
+        for(int i =0;i<this.hand.size();i++ ){
+            if(lastColor.equals(hand.get(i).getCouleur())||lastValue.equals(hand.get(i).getValeur())||hand.get(i).getValeur().equals("HUIT")){
+                CarteJouer.playedCard.add(hand.get(i));
+                hand.remove(i);
+                return;
+            }
+            
+        }
+
+        pickCard(1);
+
     }
 
 }
