@@ -7,6 +7,20 @@ public class Local {
         Player malik = new Player("malik", Distribution.newRandomHand());
         Player ken = new Player("ken", Distribution.newRandomHand());
 
+        CarteJouer.firstCard();
+
+        while(!malik.getHand().isEmpty()||!ken.getHand().isEmpty()){
+            malik.playCard();
+            ken.playCard();
+        }
+
+        if(malik.getHand().isEmpty()){
+            System.out.println("malik gagnant");
+        }
+        else{
+            System.out.println("ken gagnant");
+        }
+
 
         /* 
         for(int i=0;i<Distribution.packet.size();i++){
