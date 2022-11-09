@@ -21,11 +21,22 @@ public class Local {
         
         System.out.println();
 
-
+        Player[] players = {malik,ken};
+        Turn tour = new Turn(2, players);
 
         CarteJouer.firstCard();
         while(true){
 
+            players[Turn.nextPlayer].playCard();
+            if(players[Turn.nextPlayer].getHand().isEmpty()){
+                System.out.println(players[Turn.nextPlayer].getName() + " a gagné");
+                break;
+            }
+            Turn.nextTurnIndex();
+
+            
+
+            /* 
             System.out.println(CarteJouer.playedCard.get(CarteJouer.playedCard.size()-1).getValeur()+" "+CarteJouer.playedCard.get(CarteJouer.playedCard.size()-1).getCouleur());
             malik.playCard();
             if(malik.getHand().isEmpty()){
@@ -39,6 +50,7 @@ public class Local {
                 System.out.println("ken gagne");
                 break;
             }
+            */
 
         }
        

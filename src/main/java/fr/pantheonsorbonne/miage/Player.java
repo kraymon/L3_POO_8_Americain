@@ -11,6 +11,10 @@ public class Player {
         this.hand = hand;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
     public ArrayList<Card> getHand(){
         return this.hand;
     }
@@ -46,6 +50,7 @@ public class Player {
             }
             
         }
+
 
         pickCard(1);
 
