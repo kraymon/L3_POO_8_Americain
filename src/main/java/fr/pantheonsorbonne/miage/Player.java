@@ -42,13 +42,27 @@ public class Player {
         String lastColor = lastPlayedCard.getCouleur();
         String lastValue = lastPlayedCard.getValeur();
 
+        if(lastValue.equals("AS") && As.asPicked==false){
+            for(int i =0;i<this.hand.size();i++ ){
+                if(hand.get(i).getValeur().equals("AS")){
+                    As.addAs();
+                    CarteJouer.playedCard.add(hand.get(i));
+                    hand.remove(i);
+                    return;
+                }  
+            }
+            As.plusTwo();
+            As.asPicked=true;
+            return;
+        }
+
         for(int i =0;i<this.hand.size();i++ ){
             if(lastColor.equals(hand.get(i).getCouleur())||lastValue.equals(hand.get(i).getValeur())||hand.get(i).getValeur().equals("HUIT")){
                 CarteJouer.playedCard.add(hand.get(i));
                 hand.remove(i);
+                As.asPicked=false;
                 return;
             }
-            
         }
 
 
