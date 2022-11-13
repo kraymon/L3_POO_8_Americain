@@ -6,6 +6,7 @@ public class Local {
         Distribution.createPacket();
         Player malik = new Player("malik", Distribution.newRandomHand());
         Player ken = new Player("ken", Distribution.newRandomHand());
+        Player herbaud = new Player("herbaud", Distribution.newRandomHand());
 
         
         System.out.println("Main de malik : ");
