@@ -4,8 +4,8 @@ public class Ten extends Card {
 
     public static boolean playAgain = false;
 
-    public Ten (String valeur,String couleur){
-        super(valeur,couleur);
+    public Ten(String valeur, String couleur) {
+        super(valeur, couleur);
     }
 
 }

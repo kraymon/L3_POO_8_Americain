@@ -7,17 +7,18 @@ public class Local {
         Distribution.createPacket();
         Player malik = new Player("malik", Distribution.newRandomHand());
         Player ken = new Player("ken", Distribution.newRandomHand());
-        Player herbaud = new Player("herbaud", Distribution.newRandomHand());
+        Player herbaut = new Player("herbaut", Distribution.newRandomHand());
 
-        Player[] players = { malik, ken, herbaud };
+        Player[] players = { malik, ken, herbaut };
         Turn tour = new Turn(3, players);
 
         CarteJouer.firstCard();
-        
+
         while (true) {
 
-            System.out.println("Carte jouer : "+CarteJouer.playedCard.get(CarteJouer.playedCard.size() - 1).getValeur() + " "
-                    + CarteJouer.playedCard.get(CarteJouer.playedCard.size() - 1).getCouleur());
+            System.out.println(
+                    "Carte jouée : " + CarteJouer.playedCard.get(CarteJouer.playedCard.size() - 1).getValeur() + " "
+                            + CarteJouer.playedCard.get(CarteJouer.playedCard.size() - 1).getCouleur());
             System.out.println();
 
             System.out.println("main de " + players[Turn.nextPlayer].getName());

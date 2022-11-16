@@ -88,20 +88,20 @@ public class Player {
                 String toCombinate = hand.get(i).getValeur();
                 hand.remove(i);
                 // combination of cards
-                
-            if(!toCombinate.equals("AS")){
-                for (int j = 0; j < this.hand.size(); j++) {
-                    if (toCombinate.equals(hand.get(j).getValeur())) {
-                        CarteJouer.playedCard.add(hand.get(j));
-                        if (hand.get(j).getValeur().equals("VALET")) {
-                            if (Turn.nbPlayer != 2) {
-                                Turn.changeRotation();
+
+                if (!toCombinate.equals("AS")) {
+                    for (int j = 0; j < this.hand.size(); j++) {
+                        if (toCombinate.equals(hand.get(j).getValeur())) {
+                            CarteJouer.playedCard.add(hand.get(j));
+                            if (hand.get(j).getValeur().equals("VALET")) {
+                                if (Turn.nbPlayer != 2) {
+                                    Turn.changeRotation();
+                                }
                             }
+                            hand.remove(j);
                         }
-                        hand.remove(j);
                     }
                 }
-            }
                 As.asPicked = false;
                 Seven.sevenStopped = false;
                 return;
