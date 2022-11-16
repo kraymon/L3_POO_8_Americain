@@ -25,7 +25,6 @@ public class Eight extends Card {
                 maxColor= tabColor[j];
             }
         }
-
         return maxColor;
     }
 }
