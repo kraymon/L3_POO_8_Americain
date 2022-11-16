@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.miage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Player {
     private String name;
