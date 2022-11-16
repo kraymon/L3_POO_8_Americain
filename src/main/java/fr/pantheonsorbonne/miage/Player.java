@@ -78,16 +78,26 @@ public class Player {
                 CarteJouer.playedCard.add(hand.get(i));
                 if (hand.get(i).getValeur().equals("DIX")) {
                     Ten.playAgain = true;
-                }
-                else if (hand.get(i).getValeur().equals("VALET")){
-                    if(Turn.nbPlayer==2){
+                } else if (hand.get(i).getValeur().equals("VALET")) {
+                    if (Turn.nbPlayer == 2) {
                         Ten.playAgain = true;
-                    }
-                    else{
+                    } else {
                         Turn.changeRotation();
                     }
                 }
                 hand.remove(i);
+                // combination of cards
+                for (int j = 0; j < this.hand.size(); j++) {
+                    if (lastValue.equals(hand.get(j).getValeur())) {
+                        CarteJouer.playedCard.add(hand.get(j));
+                        if (hand.get(j).getValeur().equals("VALET")) {
+                            if (Turn.nbPlayer != 2) {
+                                Turn.changeRotation();
+                            }
+                        }
+                        hand.remove(j);
+                    }
+                }
                 As.asPicked = false;
                 Seven.sevenStopped = false;
                 return;
