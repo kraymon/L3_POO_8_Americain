@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ public class DistributionTest
      * Rigorous Test :-)
      */
     @Test
-    public void testCreatePacket()
+    public void testSizeCreatePacket()
     {
         Distribution.createPacket();
         assertEquals(52,Distribution.packet.size());
@@ -38,6 +39,48 @@ public class DistributionTest
 
         assertEquals(52,packetTest.size());
         
+    }
+    @Test
+    public void newRandomHandSizeTest()
+    {
+        Distribution.createPacket();
+        ArrayList<Card> hand = Distribution.newRandomHand();
+        assertEquals(8,hand.size());
+    }
+    @Test
+    public void testAllDifferentCardsInHand()
+    {
+        Distribution.createPacket();
+        ArrayList<Card> hand = Distribution.newRandomHand();
+        Set<Card> handTest = new HashSet<Card>();
+        for(Card i : hand){
+            handTest.add(i);
+        }
+
+        assertEquals(8,hand.size());
+        
+    }
+
+    @Test
+    public void CardsInHandRemovedInPacket()
+    {
+        Distribution.createPacket();
+        ArrayList<Card> hand = Distribution.newRandomHand();
+        for(Card i : hand){
+            assertFalse(Distribution.packet.contains(i));
+        }
+
+        assertEquals(44,Distribution.packet.size());
+        
+    }
+
+    @Test
+    public void getRandomCardTest()
+    {
+        Distribution.createPacket();
+        Card card = Distribution.getRandomCard();
+        assertEquals(51,Distribution.packet.size());
+        assertFalse(Distribution.packet.contains(card));
     }
 
 }
