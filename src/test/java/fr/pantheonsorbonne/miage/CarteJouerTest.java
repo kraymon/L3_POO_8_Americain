@@ -12,6 +12,7 @@ import java.util.Set;
 
 
 public class CarteJouerTest {
+    /* 
     
     @Test
     public void firstCardAddedToPlayedCard(){
@@ -67,5 +68,6 @@ public class CarteJouerTest {
         assertTrue(isSimpleCard);
 
     }
+    */
 
 }

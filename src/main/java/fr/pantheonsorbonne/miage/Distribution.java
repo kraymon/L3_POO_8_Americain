@@ -3,26 +3,32 @@ package fr.pantheonsorbonne.miage;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Distribution {
 
-    static String[] couleur = { "COEUR", "CARREAU", "PIQUE", "TREFLE" };
-    static String[] valeur = { "AS", "ROI", "DAME", "VALET", "DIX", "NEUF", "HUIT", "SEPT", "SIX", "CINQ", "QUATRE",
+    private static final String[] COULEUR = { "COEUR", "CARREAU", "PIQUE", "TREFLE" };
+    private static final String[] VALEUR = { "AS", "ROI", "DAME", "VALET", "DIX", "NEUF", "HUIT", "SEPT", "SIX", "CINQ", "QUATRE",
             "TROIS", "DEUX" };
-    static LinkedList<Card> packet = new LinkedList<Card>();
-    static Random random = new Random();
+    public static LinkedList<Card> packet = new LinkedList<>();
+    public static LinkedList<Card> playedCard = new LinkedList<>();
+    private static Random random = new Random();
+
+    private Distribution(){
+
+    }
 
     public static void createPacket() {
-        for (int i = 0; i < valeur.length; i++) {
-            for (int j = 0; j < couleur.length; j++) {
-                Card carte = new Card(valeur[i], couleur[j]);
+        for (int i = 0; i < VALEUR.length; i++) {
+            for (int j = 0; j < COULEUR.length; j++) {
+                Card carte = new Card(VALEUR[i], COULEUR[j]);
                 packet.add(carte);
             }
         }
     }
 
-    public static ArrayList<Card> newRandomHand() {
-        ArrayList<Card> hand = new ArrayList<Card>();
+    public static List<Card> newRandomHand() {
+        ArrayList<Card> hand = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
             int randomIndex = random.nextInt(packet.size());
@@ -40,5 +46,18 @@ public class Distribution {
 
         return carte;
 
+    }
+
+
+    public static void firstCard() {
+        Card carte;
+        int randomIndex;
+        do {
+            randomIndex = random.nextInt(packet.size());
+            carte = packet.get(randomIndex);
+        } while (carte.getValeur().equals("AS") || carte.getValeur().equals("VALET") || carte.getValeur().equals("DIX")
+                || carte.getValeur().equals("SEPT") || carte.getValeur().equals("HUIT"));
+        playedCard.add(carte);
+        packet.remove(randomIndex);
     }
 }

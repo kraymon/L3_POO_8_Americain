@@ -1,11 +1,9 @@
 package fr.pantheonsorbonne.miage;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,14 +42,14 @@ public class DistributionTest
     public void newRandomHandSizeTest()
     {
         Distribution.createPacket();
-        ArrayList<Card> hand = Distribution.newRandomHand();
+        List<Card> hand = Distribution.newRandomHand();
         assertEquals(8,hand.size());
     }
     @Test
     public void testAllDifferentCardsInHand()
     {
         Distribution.createPacket();
-        ArrayList<Card> hand = Distribution.newRandomHand();
+        List<Card> hand = Distribution.newRandomHand();
         Set<Card> handTest = new HashSet<Card>();
         for(Card i : hand){
             handTest.add(i);
@@ -65,7 +63,7 @@ public class DistributionTest
     public void CardsInHandRemovedInPacket()
     {
         Distribution.createPacket();
-        ArrayList<Card> hand = Distribution.newRandomHand();
+        List<Card> hand = Distribution.newRandomHand();
         for(Card i : hand){
             assertFalse(Distribution.packet.contains(i));
         }
