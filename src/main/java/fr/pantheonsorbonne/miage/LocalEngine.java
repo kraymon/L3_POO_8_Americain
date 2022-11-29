@@ -10,24 +10,24 @@ public class LocalEngine {
     private int nextPlayer = 0;
     private int rotation = 0;
     private Player[] players = new Player[3];
-    
+    Distribution dist = new Distribution();
     protected void play(){
-        Distribution.createPacket();
-        Player malik = new Player("malik", Distribution.newRandomHand());
-        Player ken = new Player("ken", Distribution.newRandomHand());
-        Player herbaut = new Player("herbaut", Distribution.newRandomHand());
+
+        Player malik = new Player("malik", dist.newRandomHand());
+        Player ken = new Player("ken", dist.newRandomHand());
+        Player herbaut = new Player("herbaut", dist.newRandomHand());
         players[0] =malik;
         players[1] =ken;
         players[2] =herbaut;
-        
 
-        Distribution.firstCard();
+
+        dist.distributeFirstCardOnTheTable();
 
         while (true) {
 
             System.out.println(
-                    "Carte jouée : " + Distribution.playedCard.get(Distribution.playedCard.size() - 1).getValeur() + " "
-                            + Distribution.playedCard.get(Distribution.playedCard.size() - 1).getCouleur());
+                    "Carte jouée : " + dist.getPlayedCard().get(dist.getPacket().size() - 1).getValeur() + " "
+                            + dist.getPlayedCard().get(dist.getPlayedCard().size() - 1).getCouleur());
             System.out.println();
 
             System.out.println("main de " + players[nextPlayer].getName());
@@ -75,16 +75,16 @@ public class LocalEngine {
 
     public void pickCard(int number, Player player) {
         for (int i = 0; i < number; i++) {
-            if (!Distribution.packet.isEmpty()) {
-                player.getHand().add(Distribution.getRandomCard());
+            if (!dist.getPacket().isEmpty()) {
+                player.getHand().add(dist.getRandomCard());
             } else {
-                int initialSize = Distribution.playedCard.size() - 1;
+                int initialSize = dist.getPlayedCard().size() - 1;
                 for (int j = 0; j < initialSize; j++) {
-                    Distribution.packet.add(Distribution.playedCard.get(0));
-                    Distribution.playedCard.remove(0);
+                    dist.getPacket().add(dist.getPlayedCard().get(0));
+                    dist.getPlayedCard().remove(0);
                 }
 
-                Distribution.playedCard.add(Distribution.packet.get(Distribution.packet.size() - 1));
+                dist.getPlayedCard().add(dist.getPacket().get(dist.getPacket().size() - 1));
                 number++;
             }
         }
@@ -123,7 +123,7 @@ public class LocalEngine {
         for (int i = 0; i < player.getHand().size(); i++) {
             if (player.getHand().get(i).getValeur().equals("AS")) {
                 addAs();
-                Distribution.playedCard.add(player.getHand().get(i));
+                dist.getPlayedCard().add(player.getHand().get(i));
                 player.getHand().remove(i);
                 return;
             }
@@ -134,7 +134,7 @@ public class LocalEngine {
     }
 
     private void playEight(int indexEight, Player player){
-        Distribution.playedCard.add(player.getHand().get(indexEight));
+        dist.getPlayedCard().add(player.getHand().get(indexEight));
         player.getHand().remove(indexEight);
         asPicked = false;
         sevenStopped = false;
@@ -144,7 +144,7 @@ public class LocalEngine {
     private void playCombination(String toCombinate, Player player){
         for (int j = 0; j < player.getHand().size(); j++) {
             if (toCombinate.equals(player.getHand().get(j).getValeur())) {
-                Distribution.playedCard.add(player.getHand().get(j));
+                dist.getPlayedCard().add(player.getHand().get(j));
                 if (player.getHand().get(j).getValeur().equals("VALET") && players.length != 2) {
                     changeRotation();
                 }
@@ -154,7 +154,7 @@ public class LocalEngine {
     }
 
     public void playCard(Player player) {
-        Card lastPlayedCard = Distribution.playedCard.get(Distribution.playedCard.size() - 1);
+        Card lastPlayedCard = dist.getPlayedCard().get(dist.getPlayedCard().size() - 1);
         String lastColor = lastPlayedCard.getCouleur();
         String lastValue = lastPlayedCard.getValeur();
 
@@ -178,7 +178,7 @@ public class LocalEngine {
 
             if ((lastColor.equals(player.getHand().get(i).getCouleur()) || lastValue.equals(player.getHand().get(i).getValeur()))
                     && !player.getHand().get(i).getValeur().equals("HUIT")) {
-                Distribution.playedCard.add(player.getHand().get(i));
+                dist.getPlayedCard().add(player.getHand().get(i));
                 if (player.getHand().get(i).getValeur().equals("DIX")) {
                     playAgain = true;
                 } else if (player.getHand().get(i).getValeur().equals("VALET")) {

@@ -22,16 +22,16 @@ public class DistributionTest
     @Test
     public void testSizeCreatePacket()
     {
-        Distribution.createPacket();
-        assertEquals(52,Distribution.packet.size());
+        Distribution dist = new Distribution();
+        assertEquals(52,dist.getPacket().size());
         
     }
     @Test
     public void testAllDifferentCards()
     {
-        Distribution.createPacket();
-        Set<Card> packetTest = new HashSet<Card>();
-        for(Card i : Distribution.packet){
+        Distribution dist = new Distribution();
+        Set<Card> packetTest = new HashSet<>();
+        for(Card i : dist.getPacket()){
             packetTest.add(i);
         }
 
@@ -41,15 +41,15 @@ public class DistributionTest
     @Test
     public void newRandomHandSizeTest()
     {
-        Distribution.createPacket();
-        List<Card> hand = Distribution.newRandomHand();
+        Distribution dist = new Distribution();
+        List<Card> hand = dist.newRandomHand();
         assertEquals(8,hand.size());
     }
     @Test
     public void testAllDifferentCardsInHand()
     {
-        Distribution.createPacket();
-        List<Card> hand = Distribution.newRandomHand();
+        Distribution dist = new Distribution();
+        List<Card> hand = dist.newRandomHand();
         Set<Card> handTest = new HashSet<Card>();
         for(Card i : hand){
             handTest.add(i);
@@ -62,23 +62,24 @@ public class DistributionTest
     @Test
     public void CardsInHandRemovedInPacket()
     {
-        Distribution.createPacket();
-        List<Card> hand = Distribution.newRandomHand();
+        Distribution dist = new Distribution();
+
+        List<Card> hand = dist.newRandomHand();
         for(Card i : hand){
-            assertFalse(Distribution.packet.contains(i));
+            assertFalse(dist.getPacket().contains(i));
         }
 
-        assertEquals(44,Distribution.packet.size());
+        assertEquals(44,dist.getPacket().size());
         
     }
 
     @Test
     public void getRandomCardTest()
     {
-        Distribution.createPacket();
-        Card card = Distribution.getRandomCard();
-        assertEquals(51,Distribution.packet.size());
-        assertFalse(Distribution.packet.contains(card));
+        Distribution dist = new Distribution();
+        Card card = dist.getRandomCard();
+        assertEquals(51,dist.getPacket().size());
+        assertFalse(dist.getPacket().contains(card));
     }
 
 }
