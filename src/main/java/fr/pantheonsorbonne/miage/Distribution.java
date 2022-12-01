@@ -10,15 +10,32 @@ public class Distribution {
     private static final String[] COULEUR = { "COEUR", "CARREAU", "PIQUE", "TREFLE" };
     private static final String[] VALEUR = { "AS", "ROI", "DAME", "VALET", "DIX", "NEUF", "HUIT", "SEPT", "SIX", "CINQ", "QUATRE",
             "TROIS", "DEUX" };
-    public static LinkedList<Card> packet = new LinkedList<>();
-    public static LinkedList<Card> playedCard = new LinkedList<>();
-    private static Random random = new Random();
 
-    private Distribution(){
-
+    public LinkedList<Card> getPacket() {
+        return packet;
     }
 
-    public static void createPacket() {
+    public void setPacket(LinkedList<Card> packet) {
+        this.packet = packet;
+    }
+
+    public List<Card> getPlayedCard() {
+        return playedCard;
+    }
+
+    public void setPlayedCard(LinkedList<Card> playedCard) {
+        this.playedCard = playedCard;
+    }
+
+    private LinkedList<Card> packet = new LinkedList<>();
+    private LinkedList<Card> playedCard = new LinkedList<>();
+    private static Random random = new Random();
+
+    public Distribution(){
+        this.createPacket();
+    }
+
+    private void createPacket() {
         for (int i = 0; i < VALEUR.length; i++) {
             for (int j = 0; j < COULEUR.length; j++) {
                 Card carte = new Card(VALEUR[i], COULEUR[j]);
@@ -27,7 +44,7 @@ public class Distribution {
         }
     }
 
-    public static List<Card> newRandomHand() {
+    public List<Card> newRandomHand() {
         ArrayList<Card> hand = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
@@ -39,7 +56,7 @@ public class Distribution {
         return hand;
     }
 
-    public static Card getRandomCard() {
+    public  Card getRandomCard() {
         int randomIndex = random.nextInt(packet.size());
         Card carte = packet.get(randomIndex);
         packet.remove(randomIndex);
@@ -49,7 +66,7 @@ public class Distribution {
     }
 
 
-    public static void firstCard() {
+    public  void distributeFirstCardOnTheTable() {
         Card carte;
         int randomIndex;
         do {
