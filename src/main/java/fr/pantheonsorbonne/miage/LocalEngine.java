@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.miage;
 
-public class LocalEngine {
+public abstract class LocalEngine {
 
     private  int nbAs = 0;
     private boolean asPicked = false;
@@ -9,38 +9,27 @@ public class LocalEngine {
     private String lastColorChosen = "";
     private int nextPlayer = 0;
     private int rotation = 0;
-    private Player[] players = new Player[3];
     Distribution dist = new Distribution();
+
+    protected abstract Player[] getInitialPlayers();
+
     protected void play(){
-
-        Player malik = new Player("malik", dist.newRandomHand());
-        Player ken = new Player("ken", dist.newRandomHand());
-        Player herbaut = new Player("herbaut", dist.newRandomHand());
-        players[0] =malik;
-        players[1] =ken;
-        players[2] =herbaut;
-
 
         dist.distributeFirstCardOnTheTable();
 
         while (true) {
 
             System.out.println(
-                    "Carte jouée : " + dist.getPlayedCard().get(dist.getPacket().size() - 1).getValeur() + " "
+                    "Carte jouée : " + dist.getPlayedCard().get(dist.getPlayedCard().size() - 1).getValeur() + " "
                             + dist.getPlayedCard().get(dist.getPlayedCard().size() - 1).getCouleur());
             System.out.println();
 
-            System.out.println("main de " + players[nextPlayer].getName());
-            for (int i = 0; i < players[nextPlayer].getHand().size(); i++) {
-                System.out.println(players[nextPlayer].getHand().get(i).getValeur() + " "
-                        + players[nextPlayer].getHand().get(i).getCouleur());
-            }
+            getInitialPlayers()[nextPlayer].showHand();
 
-            System.out.println();
+            playCard(getInitialPlayers()[nextPlayer]);
 
-            playCard(players[nextPlayer]);
-            if (players[nextPlayer].getHand().isEmpty()) {
-                System.out.println(players[nextPlayer].getName() + " a gagné");
+            if (getInitialPlayers()[nextPlayer].getHand().isEmpty()) {
+                System.out.println(getInitialPlayers()[nextPlayer].getName() + " a gagné");
                 break;
             }
            nextTurnIndex();
@@ -52,13 +41,13 @@ public class LocalEngine {
         if (!playAgain) {
             if (rotation == 0) {
                 nextPlayer++;
-                if (nextPlayer >= players.length) {
+                if (nextPlayer >= getInitialPlayers().length) {
                     nextPlayer = 0;
                 }
             } else {
                 nextPlayer--;
                 if (nextPlayer < 0) {
-                    nextPlayer = players.length - 1;
+                    nextPlayer = getInitialPlayers().length - 1;
                 }
             }
         } else {
@@ -80,8 +69,7 @@ public class LocalEngine {
             } else {
                 int initialSize = dist.getPlayedCard().size() - 1;
                 for (int j = 0; j < initialSize; j++) {
-                    dist.getPacket().add(dist.getPlayedCard().get(0));
-                    dist.getPlayedCard().remove(0);
+                    dist.getPacket().add(dist.getPlayedCard().poll());
                 }
 
                 dist.getPlayedCard().add(dist.getPacket().get(dist.getPacket().size() - 1));
@@ -97,8 +85,8 @@ public class LocalEngine {
 
         for(int j=0;j<4;j++){
             int count=0;
-            for(int i=0; i<players[nextPlayer].getHand().size();i++){
-                if(players[nextPlayer].getHand().get(i).getCouleur().equals(tabColor[j])){
+            for(int i=0; i<getInitialPlayers()[nextPlayer].getHand().size();i++){
+                if(getInitialPlayers()[nextPlayer].getHand().get(i).getCouleur().equals(tabColor[j])){
                     count++;
                 }
             }
@@ -145,14 +133,24 @@ public class LocalEngine {
         for (int j = 0; j < player.getHand().size(); j++) {
             if (toCombinate.equals(player.getHand().get(j).getValeur())) {
                 dist.getPlayedCard().add(player.getHand().get(j));
-                if (player.getHand().get(j).getValeur().equals("VALET") && players.length != 2) {
+                if (player.getHand().get(j).getValeur().equals("VALET") && getInitialPlayers().length != 2) {
                     changeRotation();
                 }
                 player.getHand().remove(j);
             }
         }
     }
-
+    private void makePlayAgainOrChangeRotation(String valeur){
+        if (valeur.equals("DIX")) {
+            playAgain = true;
+        } else if (valeur.equals("VALET")) {
+            if (getInitialPlayers().length == 2) {
+                playAgain = true;
+            } else {
+                changeRotation();
+            }
+        }
+    }
     public void playCard(Player player) {
         Card lastPlayedCard = dist.getPlayedCard().get(dist.getPlayedCard().size() - 1);
         String lastColor = lastPlayedCard.getCouleur();
@@ -174,22 +172,14 @@ public class LocalEngine {
 
         int indexEight = -1;
 
-        for (int i = 0; i < player.getHand().size(); i++) {
+        for (Card card : player.getHand()) {
 
-            if ((lastColor.equals(player.getHand().get(i).getCouleur()) || lastValue.equals(player.getHand().get(i).getValeur()))
-                    && !player.getHand().get(i).getValeur().equals("HUIT")) {
-                dist.getPlayedCard().add(player.getHand().get(i));
-                if (player.getHand().get(i).getValeur().equals("DIX")) {
-                    playAgain = true;
-                } else if (player.getHand().get(i).getValeur().equals("VALET")) {
-                    if (players.length == 2) {
-                        playAgain = true;
-                    } else {
-                        changeRotation();
-                    }
-                }
-                String toCombinate = player.getHand().get(i).getValeur();
-                player.getHand().remove(i);
+            if ((lastColor.equals(card.getCouleur()) || lastValue.equals(card.getValeur()))
+                    && !card.getValeur().equals("HUIT")) {
+                dist.getPlayedCard().add(card);
+                makePlayAgainOrChangeRotation(card.getValeur());
+                String toCombinate = card.getValeur();
+                player.getHand().remove(card);
                 // combination of cards
 
                 if (!toCombinate.equals("AS")) {
@@ -199,8 +189,8 @@ public class LocalEngine {
                 sevenStopped = false;
                 return;
             }
-            if (player.getHand().get(i).getValeur().equals("HUIT")) {
-                indexEight = i;
+            if (card.getValeur().equals("HUIT")) {
+                indexEight = player.getHand().indexOf(card);
             }
         }
 
