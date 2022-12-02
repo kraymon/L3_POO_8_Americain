@@ -8,7 +8,7 @@ public abstract class LocalEngine {
     private boolean playAgain = false;
     private String lastColorChosen = "";
     private int nextPlayer = 0;
-    private int rotation = 0;
+    private boolean clockwise  = true;
     Distribution dist = new Distribution();
 
     protected abstract Player[] getInitialPlayers();
@@ -39,7 +39,7 @@ public abstract class LocalEngine {
 
     public  void nextTurnIndex() {
         if (!playAgain) {
-            if (rotation == 0) {
+            if (clockwise) {
                 nextPlayer++;
                 if (nextPlayer >= getInitialPlayers().length) {
                     nextPlayer = 0;
@@ -56,9 +56,11 @@ public abstract class LocalEngine {
     }
 
     public  void changeRotation() {
-        rotation++;
-        if (rotation > 1) {
-            rotation = 0;
+        if(clockwise){
+            clockwise = false;
+        }
+        else{
+            clockwise = true;
         }
     }
 
@@ -72,7 +74,7 @@ public abstract class LocalEngine {
                     dist.getPacket().add(dist.getPlayedCard().poll());
                 }
 
-                dist.getPlayedCard().add(dist.getPacket().get(dist.getPacket().size() - 1));
+                dist.getPlayedCard().add(dist.getPacket().pollLast());
                 number++;
             }
         }
@@ -83,16 +85,16 @@ public abstract class LocalEngine {
         int max = 0;
         String maxColor = "";
 
-        for(int j=0;j<4;j++){
+        for(String color : tabColor){
             int count=0;
-            for(int i=0; i<getInitialPlayers()[nextPlayer].getHand().size();i++){
-                if(getInitialPlayers()[nextPlayer].getHand().get(i).getCouleur().equals(tabColor[j])){
+            for(Card card : getInitialPlayers()[nextPlayer].getHand()){
+                if(card.getCouleur().equals(color)){
                     count++;
                 }
             }
             if(count>max){
                 max=count;
-                maxColor= tabColor[j];
+                maxColor= color;
             }
         }
         return maxColor;
@@ -108,11 +110,11 @@ public abstract class LocalEngine {
     }
 
     private void asPlayed(Player player) {
-        for (int i = 0; i < player.getHand().size(); i++) {
-            if (player.getHand().get(i).getValeur().equals("AS")) {
+        for (Card card : player.getHand()) {
+            if (card.getValeur().equals("AS")) {
                 addAs();
-                dist.getPlayedCard().add(player.getHand().get(i));
-                player.getHand().remove(i);
+                dist.getPlayedCard().add(card);
+                player.getHand().remove(card);
                 return;
             }
         }
@@ -136,11 +138,11 @@ public abstract class LocalEngine {
                 if (player.getHand().get(j).getValeur().equals("VALET") && getInitialPlayers().length != 2) {
                     changeRotation();
                 }
-                player.getHand().remove(j);
+                player.getHand().remove(player.getHand().get(j));
             }
         }
     }
-    private void makePlayAgainOrChangeRotation(String valeur){
+    private void verifyIfTenOrJack(String valeur){
         if (valeur.equals("DIX")) {
             playAgain = true;
         } else if (valeur.equals("VALET")) {
@@ -149,6 +151,12 @@ public abstract class LocalEngine {
             } else {
                 changeRotation();
             }
+        }
+    }
+
+    private void verifyIfPlayerCanCombinate(String toCombinate, Player player){
+        if (!toCombinate.equals("AS")) {
+            playCombination(toCombinate, player);
         }
     }
     public void playCard(Player player) {
@@ -177,14 +185,11 @@ public abstract class LocalEngine {
             if ((lastColor.equals(card.getCouleur()) || lastValue.equals(card.getValeur()))
                     && !card.getValeur().equals("HUIT")) {
                 dist.getPlayedCard().add(card);
-                makePlayAgainOrChangeRotation(card.getValeur());
+                verifyIfTenOrJack(card.getValeur());
                 String toCombinate = card.getValeur();
                 player.getHand().remove(card);
                 // combination of cards
-
-                if (!toCombinate.equals("AS")) {
-                    playCombination(toCombinate, player);
-                }
+                verifyIfPlayerCanCombinate(toCombinate, player);
                 asPicked = false;
                 sevenStopped = false;
                 return;

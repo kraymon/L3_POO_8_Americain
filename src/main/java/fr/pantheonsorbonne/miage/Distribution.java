@@ -37,9 +37,9 @@ public class Distribution {
     }
 
     private void createPacket() {
-        for (int i = 0; i < VALEUR.length; i++) {
-            for (int j = 0; j < COULEUR.length; j++) {
-                Card carte = new Card(VALEUR[i], COULEUR[j]);
+        for (String valeur : VALEUR) {
+            for (String couleur : COULEUR) {
+                Card carte = new Card(valeur, couleur);
                 packet.add(carte);
             }
         }
