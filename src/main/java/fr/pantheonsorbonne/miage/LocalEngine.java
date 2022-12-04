@@ -11,6 +11,28 @@ public abstract class LocalEngine {
     private boolean clockwise  = true;
     Distribution dist = new Distribution();
 
+    public boolean getClockwise(){
+        return clockwise;
+    }
+    public boolean getasPicked(){
+        return asPicked;
+    }
+    public boolean getSevenStopped(){
+        return sevenStopped;
+    }
+    public int getNbAs(){
+        return nbAs;
+    }
+    public boolean getPlayAgain(){
+        return playAgain;
+    }
+    public int getNextPlayer(){
+        return nextPlayer;
+    }
+    public String getLastColorChosen(){
+        return lastColorChosen;
+    }
+
     protected abstract Player[] getInitialPlayers();
 
     protected void play(){

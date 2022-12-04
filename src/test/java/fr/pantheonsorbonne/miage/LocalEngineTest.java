@@ -15,6 +15,10 @@ public class LocalEngineTest {
     public void testChangeRotation()
     {
         Local local = new Local();
-        
+        boolean clockwise = local.getClockwise();
+        assertTrue(clockwise);
+        local.changeRotation();
+        clockwise = local.getClockwise();
+        assertTrue(!clockwise);
     }
 }
