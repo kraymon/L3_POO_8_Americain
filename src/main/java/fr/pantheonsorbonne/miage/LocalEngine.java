@@ -131,7 +131,7 @@ public abstract class LocalEngine {
         nbAs++;
     }
 
-    private void asPlayed(Player player) {
+    public void asPlayed(Player player) {
         for (Card card : player.getHand()) {
             if (card.getValeur().equals("AS")) {
                 addAs();
@@ -145,7 +145,7 @@ public abstract class LocalEngine {
         asPicked = true;
     }
 
-    private void playEight(int indexEight, Player player){
+    public void playEight(int indexEight, Player player){
         dist.getPlayedCard().add(player.getHand().get(indexEight));
         player.getHand().remove(indexEight);
         asPicked = false;
@@ -153,7 +153,7 @@ public abstract class LocalEngine {
         lastColorChosen = chooseColor();
     }
 
-    private void playCombination(String toCombinate, Player player){
+    public void playCombination(String toCombinate, Player player){
         for (int j = 0; j < player.getHand().size(); j++) {
             if (toCombinate.equals(player.getHand().get(j).getValeur())) {
                 dist.getPlayedCard().add(player.getHand().get(j));
@@ -164,7 +164,7 @@ public abstract class LocalEngine {
             }
         }
     }
-    private void verifyIfTenOrJack(String valeur){
+    public void verifyIfTenOrJack(String valeur){
         if (valeur.equals("DIX")) {
             playAgain = true;
         } else if (valeur.equals("VALET")) {
@@ -176,7 +176,7 @@ public abstract class LocalEngine {
         }
     }
 
-    private void verifyIfPlayerCanCombinate(String toCombinate, Player player){
+    public void verifyIfPlayerCanCombinate(String toCombinate, Player player){
         if (!toCombinate.equals("AS")) {
             playCombination(toCombinate, player);
         }
