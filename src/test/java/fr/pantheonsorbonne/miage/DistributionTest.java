@@ -8,6 +8,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -80,6 +81,41 @@ public class DistributionTest
         Card card = dist.getRandomCard();
         assertEquals(51,dist.getPacket().size());
         assertFalse(dist.getPacket().contains(card));
+    }
+
+    @Test
+    public void firstCardAddedToPlayedCard(){
+        Distribution dist = new Distribution();
+        dist.distributeFirstCardOnTheTable();
+
+        boolean isSimpleCard = true;
+
+        assertTrue(!dist.getPlayedCard().isEmpty());
+
+        for(int i =0;i<50;i++){
+            Distribution dist2 = new Distribution();
+            dist2.distributeFirstCardOnTheTable();
+            if(dist2.getPlayedCard().getFirst().getValeur().equals("AS") || dist2.getPlayedCard().getFirst().getValeur().equals("VALET") || dist2.getPlayedCard().getFirst().getValeur().equals("DIX")
+            || dist2.getPlayedCard().getFirst().getValeur().equals("SEPT") || dist2.getPlayedCard().getFirst().getValeur().equals("HUIT")){
+                isSimpleCard = false;
+            }
+        }
+
+        assertTrue(isSimpleCard);
+    }
+
+    @Test
+    public void firstCardDeleteFromPacket(){
+        Distribution dist = new Distribution();
+        dist.distributeFirstCardOnTheTable();
+        boolean isDeleteFromPacket = true;
+        for(Card i : dist.getPacket()){
+            if(i.getCouleur().equals(dist.getPlayedCard().getFirst().getCouleur())&&i.getValeur().equals(dist.getPlayedCard().getFirst().getValeur())){
+                isDeleteFromPacket = false;
+            }
+        }
+
+        assertTrue(isDeleteFromPacket);
     }
 
 }

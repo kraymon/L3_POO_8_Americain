@@ -5,7 +5,7 @@ public class Local extends LocalEngine{
 
     private Player[] players = new Player[3];
     
-    private Local(){
+    public Local(){
         Player malik = new Player("malik", dist.newRandomHand());
         Player ken = new Player("ken", dist.newRandomHand());
         Player herbaut = new Player("herbaut", dist.newRandomHand());
