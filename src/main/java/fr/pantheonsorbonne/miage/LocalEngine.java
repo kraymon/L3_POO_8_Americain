@@ -2,40 +2,70 @@ package fr.pantheonsorbonne.miage;
 
 public abstract class LocalEngine {
 
-    private  int nbAs = 0;
+    private int nbAs = 0;
     private boolean asPicked = false;
     private boolean sevenStopped = false;
     private boolean playAgain = false;
     private String lastColorChosen = "";
     private int nextPlayer = 0;
-    private boolean clockwise  = true;
+    private boolean clockwise = true;
     Distribution dist = new Distribution();
 
-    public boolean getClockwise(){
+    public boolean getClockwise() {
         return clockwise;
     }
-    public boolean getasPicked(){
+
+    public boolean getasPicked() {
         return asPicked;
     }
-    public boolean getSevenStopped(){
+
+    public boolean getSevenStopped() {
         return sevenStopped;
     }
-    public int getNbAs(){
+
+    public int getNbAs() {
         return nbAs;
     }
-    public boolean getPlayAgain(){
+
+    public boolean getPlayAgain() {
         return playAgain;
     }
-    public int getNextPlayer(){
+
+    public int getNextPlayer() {
         return nextPlayer;
     }
-    public String getLastColorChosen(){
+
+    public String getLastColorChosen() {
         return lastColorChosen;
+    }
+
+    public void setAsPicked() {
+        if (asPicked) {
+            asPicked = false;
+        } else {
+            asPicked = true;
+        }
+    }
+
+    public void setSevenStopped() {
+        if (sevenStopped) {
+            sevenStopped = false;
+        } else {
+            sevenStopped = true;
+        }
+    }
+
+    public void setPlayAgain() {
+        if (playAgain) {
+            playAgain = false;
+        } else {
+            playAgain = true;
+        }
     }
 
     protected abstract Player[] getInitialPlayers();
 
-    protected void play(){
+    protected void play() {
 
         dist.distributeFirstCardOnTheTable();
 
@@ -54,12 +84,12 @@ public abstract class LocalEngine {
                 System.out.println(getInitialPlayers()[nextPlayer].getName() + " a gagné");
                 break;
             }
-           nextTurnIndex();
+            nextTurnIndex();
 
         }
     }
 
-    public  void nextTurnIndex() {
+    public void nextTurnIndex() {
         if (!playAgain) {
             if (clockwise) {
                 nextPlayer++;
@@ -77,11 +107,10 @@ public abstract class LocalEngine {
         }
     }
 
-    public  void changeRotation() {
-        if(clockwise){
+    public void changeRotation() {
+        if (clockwise) {
             clockwise = false;
-        }
-        else{
+        } else {
             clockwise = true;
         }
     }
@@ -102,32 +131,32 @@ public abstract class LocalEngine {
         }
     }
 
-    public  String chooseColor(){
-        String[] tabColor ={"PIQUE", "TREFLE", "COEUR", "CARREAU"};
+    public String chooseColor() {
+        String[] tabColor = { "PIQUE", "TREFLE", "COEUR", "CARREAU" };
         int max = 0;
         String maxColor = "";
 
-        for(String color : tabColor){
-            int count=0;
-            for(Card card : getInitialPlayers()[nextPlayer].getHand()){
-                if(card.getCouleur().equals(color)){
+        for (String color : tabColor) {
+            int count = 0;
+            for (Card card : getInitialPlayers()[nextPlayer].getHand()) {
+                if (card.getCouleur().equals(color)) {
                     count++;
                 }
             }
-            if(count>max){
-                max=count;
-                maxColor= color;
+            if (count > max) {
+                max = count;
+                maxColor = color;
             }
         }
         return maxColor;
     }
 
-    public void plusTwo(Player player){
-        pickCard(nbAs*2, player);
-        nbAs=0;
+    public void plusTwo(Player player) {
+        pickCard(nbAs * 2, player);
+        nbAs = 0;
     }
 
-    public  void addAs(){
+    public void addAs() {
         nbAs++;
     }
 
@@ -145,7 +174,7 @@ public abstract class LocalEngine {
         asPicked = true;
     }
 
-    public void playEight(int indexEight, Player player){
+    public void playEight(int indexEight, Player player) {
         dist.getPlayedCard().add(player.getHand().get(indexEight));
         player.getHand().remove(indexEight);
         asPicked = false;
@@ -153,7 +182,7 @@ public abstract class LocalEngine {
         lastColorChosen = chooseColor();
     }
 
-    public void playCombination(String toCombinate, Player player){
+    public void playCombination(String toCombinate, Player player) {
         for (int j = 0; j < player.getHand().size(); j++) {
             if (toCombinate.equals(player.getHand().get(j).getValeur())) {
                 dist.getPlayedCard().add(player.getHand().get(j));
@@ -164,7 +193,8 @@ public abstract class LocalEngine {
             }
         }
     }
-    public void verifyIfTenOrJack(String valeur){
+
+    public void verifyIfTenOrJack(String valeur) {
         if (valeur.equals("DIX")) {
             playAgain = true;
         } else if (valeur.equals("VALET")) {
@@ -176,11 +206,12 @@ public abstract class LocalEngine {
         }
     }
 
-    public void verifyIfPlayerCanCombinate(String toCombinate, Player player){
+    public void verifyIfPlayerCanCombinate(String toCombinate, Player player) {
         if (!toCombinate.equals("AS")) {
             playCombination(toCombinate, player);
         }
     }
+
     public void playCard(Player player) {
         Card lastPlayedCard = dist.getPlayedCard().get(dist.getPlayedCard().size() - 1);
         String lastColor = lastPlayedCard.getCouleur();

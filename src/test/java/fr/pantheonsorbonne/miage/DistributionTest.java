@@ -15,76 +15,72 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit test for simple App.
  */
-public class DistributionTest 
-{
+public class DistributionTest {
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void testSizeCreatePacket()
-    {
+    public void testSizeCreatePacket() {
         Distribution dist = new Distribution();
-        assertEquals(52,dist.getPacket().size());
-        
+        assertEquals(52, dist.getPacket().size());
+
     }
+
     @Test
-    public void testAllDifferentCards()
-    {
+    public void testAllDifferentCards() {
         Distribution dist = new Distribution();
         Set<Card> packetTest = new HashSet<>();
-        for(Card i : dist.getPacket()){
+        for (Card i : dist.getPacket()) {
             packetTest.add(i);
         }
 
-        assertEquals(52,packetTest.size());
-        
+        assertEquals(52, packetTest.size());
+
     }
+
     @Test
-    public void newRandomHandSizeTest()
-    {
+    public void newRandomHandSizeTest() {
         Distribution dist = new Distribution();
         List<Card> hand = dist.newRandomHand();
-        assertEquals(8,hand.size());
+        assertEquals(8, hand.size());
     }
+
     @Test
-    public void testAllDifferentCardsInHand()
-    {
+    public void testAllDifferentCardsInHand() {
         Distribution dist = new Distribution();
         List<Card> hand = dist.newRandomHand();
         Set<Card> handTest = new HashSet<Card>();
-        for(Card i : hand){
+        for (Card i : hand) {
             handTest.add(i);
         }
 
-        assertEquals(8,hand.size());
-        
+        assertEquals(8, hand.size());
+
     }
 
     @Test
-    public void CardsInHandRemovedInPacket()
-    {
+    public void CardsInHandRemovedInPacket() {
         Distribution dist = new Distribution();
 
         List<Card> hand = dist.newRandomHand();
-        for(Card i : hand){
+        for (Card i : hand) {
             assertFalse(dist.getPacket().contains(i));
         }
 
-        assertEquals(44,dist.getPacket().size());
-        
+        assertEquals(44, dist.getPacket().size());
+
     }
 
     @Test
-    public void getRandomCardTest()
-    {
+    public void getRandomCardTest() {
         Distribution dist = new Distribution();
         Card card = dist.getRandomCard();
-        assertEquals(51,dist.getPacket().size());
+        assertEquals(51, dist.getPacket().size());
         assertFalse(dist.getPacket().contains(card));
     }
 
     @Test
-    public void firstCardAddedToPlayedCard(){
+    public void firstCardAddedToPlayedCard() {
         Distribution dist = new Distribution();
         dist.distributeFirstCardOnTheTable();
 
@@ -92,11 +88,14 @@ public class DistributionTest
 
         assertTrue(!dist.getPlayedCard().isEmpty());
 
-        for(int i =0;i<50;i++){
+        for (int i = 0; i < 50; i++) {
             Distribution dist2 = new Distribution();
             dist2.distributeFirstCardOnTheTable();
-            if(dist2.getPlayedCard().getFirst().getValeur().equals("AS") || dist2.getPlayedCard().getFirst().getValeur().equals("VALET") || dist2.getPlayedCard().getFirst().getValeur().equals("DIX")
-            || dist2.getPlayedCard().getFirst().getValeur().equals("SEPT") || dist2.getPlayedCard().getFirst().getValeur().equals("HUIT")){
+            if (dist2.getPlayedCard().getFirst().getValeur().equals("AS")
+                    || dist2.getPlayedCard().getFirst().getValeur().equals("VALET")
+                    || dist2.getPlayedCard().getFirst().getValeur().equals("DIX")
+                    || dist2.getPlayedCard().getFirst().getValeur().equals("SEPT")
+                    || dist2.getPlayedCard().getFirst().getValeur().equals("HUIT")) {
                 isSimpleCard = false;
             }
         }
@@ -105,12 +104,13 @@ public class DistributionTest
     }
 
     @Test
-    public void firstCardDeleteFromPacket(){
+    public void firstCardDeleteFromPacket() {
         Distribution dist = new Distribution();
         dist.distributeFirstCardOnTheTable();
         boolean isDeleteFromPacket = true;
-        for(Card i : dist.getPacket()){
-            if(i.getCouleur().equals(dist.getPlayedCard().getFirst().getCouleur())&&i.getValeur().equals(dist.getPlayedCard().getFirst().getValeur())){
+        for (Card i : dist.getPacket()) {
+            if (i.getCouleur().equals(dist.getPlayedCard().getFirst().getCouleur())
+                    && i.getValeur().equals(dist.getPlayedCard().getFirst().getValeur())) {
                 isDeleteFromPacket = false;
             }
         }

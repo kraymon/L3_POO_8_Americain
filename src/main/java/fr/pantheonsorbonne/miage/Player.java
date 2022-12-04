@@ -19,7 +19,7 @@ public class Player {
         return this.hand;
     }
 
-    public void showHand(){
+    public void showHand() {
         System.out.println("main de " + name);
         for (Card card : hand) {
             System.out.println(card.getValeur() + " " + card.getCouleur());

@@ -9,7 +9,8 @@ import java.util.Queue;
 public class Distribution {
 
     private static final String[] COULEUR = { "COEUR", "CARREAU", "PIQUE", "TREFLE" };
-    private static final String[] VALEUR = { "AS", "ROI", "DAME", "VALET", "DIX", "NEUF", "HUIT", "SEPT", "SIX", "CINQ", "QUATRE",
+    private static final String[] VALEUR = { "AS", "ROI", "DAME", "VALET", "DIX", "NEUF", "HUIT", "SEPT", "SIX", "CINQ",
+            "QUATRE",
             "TROIS", "DEUX" };
 
     public LinkedList<Card> getPacket() {
@@ -32,7 +33,7 @@ public class Distribution {
     private LinkedList<Card> playedCard = new LinkedList<>();
     private static Random random = new Random();
 
-    public Distribution(){
+    public Distribution() {
         this.createPacket();
     }
 
@@ -66,8 +67,7 @@ public class Distribution {
 
     }
 
-
-    public  void distributeFirstCardOnTheTable() {
+    public void distributeFirstCardOnTheTable() {
         Card carte;
         int randomIndex;
         do {

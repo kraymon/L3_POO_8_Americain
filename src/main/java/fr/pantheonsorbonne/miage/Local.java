@@ -1,18 +1,17 @@
 package fr.pantheonsorbonne.miage;
 
-
-public class Local extends LocalEngine{
+public class Local extends LocalEngine {
 
     private Player[] players = new Player[3];
-    
-    public Local(){
+
+    public Local() {
         Player malik = new Player("malik", dist.newRandomHand());
         Player ken = new Player("ken", dist.newRandomHand());
         Player herbaut = new Player("herbaut", dist.newRandomHand());
-        
-        players[0] =malik;
-        players[1] =ken;
-        players[2] =herbaut;
+
+        players[0] = malik;
+        players[1] = ken;
+        players[2] = herbaut;
     }
 
     public static void main(String[] args) {
@@ -21,7 +20,7 @@ public class Local extends LocalEngine{
     }
 
     @Override
-    protected Player[] getInitialPlayers(){
+    protected Player[] getInitialPlayers() {
         return this.players;
     }
 }
