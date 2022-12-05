@@ -60,8 +60,8 @@ public class Distribution {
 
     public Card getRandomCard() {
         int randomIndex = random.nextInt(packet.size());
-        Card carte = packet.get(randomIndex);
-        packet.remove(randomIndex);
+        Card carte = this.packet.get(randomIndex);
+        this.packet.remove(randomIndex);
 
         return carte;
 

@@ -11,6 +11,8 @@ public abstract class LocalEngine {
     private boolean clockwise = true;
     Distribution dist = new Distribution();
 
+    protected LocalEngine(){}
+
     public boolean getClockwise() {
         return clockwise;
     }
@@ -61,6 +63,9 @@ public abstract class LocalEngine {
         } else {
             playAgain = true;
         }
+    }
+    public void setNbAs(int nb) {
+        nbAs=nb;
     }
 
     protected abstract Player[] getInitialPlayers();
@@ -131,14 +136,14 @@ public abstract class LocalEngine {
         }
     }
 
-    public String chooseColor() {
+    public String chooseColor(Player player) {
         String[] tabColor = { "PIQUE", "TREFLE", "COEUR", "CARREAU" };
         int max = 0;
         String maxColor = "";
 
         for (String color : tabColor) {
             int count = 0;
-            for (Card card : getInitialPlayers()[nextPlayer].getHand()) {
+            for (Card card : player.getHand()) {
                 if (card.getCouleur().equals(color)) {
                     count++;
                 }
@@ -179,7 +184,7 @@ public abstract class LocalEngine {
         player.getHand().remove(indexEight);
         asPicked = false;
         sevenStopped = false;
-        lastColorChosen = chooseColor();
+        lastColorChosen = chooseColor(getInitialPlayers()[nextPlayer]);
     }
 
     public void playCombination(String toCombinate, Player player) {
