@@ -54,21 +54,28 @@ public class LocalEngineTest {
     @Test
     public void testPickCard() {
         Local local = new Local();
-        assertEquals(28, local.dist.getPacket().size());
-        Player player = new Player("player",local.dist.newRandomHand());
-        local.pickCard(2, player);
-        assertEquals(10, player.getHand().size());
-        boolean isDeleteFromPacket = true;
-        for (Card c : player.getHand()){
-            for (Card c2 : local.dist.getPacket()){
-                if (c.getCouleur().equals(c2.getCouleur())
-                    && c.getValeur().equals(c2.getValeur())) {
-                isDeleteFromPacket = false;
+        if (local.getInitialPlayers().length==3){
+            assertEquals(28, local.dist.getPacket().size());
+            Player player = new Player("player",local.dist.newRandomHand());
+            local.pickCard(2, player);
+            assertEquals(10, player.getHand().size());
+            boolean isDeleteFromPacket = true;
+            for (Card c : player.getHand()){
+                for (Card c2 : local.dist.getPacket()){
+                    if (c.getCouleur().equals(c2.getCouleur())
+                        && c.getValeur().equals(c2.getValeur())) {
+                    isDeleteFromPacket = false;
+                }
+                }
             }
-            }
+            assertTrue(isDeleteFromPacket);
+            assertEquals(18, local.dist.getPacket().size());
+            local.pickCard(18, player);
+            assertEquals(0, local.dist.getPlayedCard().size());
+            //local.pickCard(1, player);
+
         }
-        assertTrue(isDeleteFromPacket);
-        assertEquals(18, local.dist.getPacket().size());
+
     }
 
     @Test
