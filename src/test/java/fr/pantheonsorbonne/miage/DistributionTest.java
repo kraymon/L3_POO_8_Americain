@@ -91,11 +91,11 @@ public class DistributionTest {
         for (int i = 0; i < 50; i++) {
             Distribution dist2 = new Distribution();
             dist2.distributeFirstCardOnTheTable();
-            if (dist2.getPlayedCard().getFirst().getValeur().equals("AS")
-                    || dist2.getPlayedCard().getFirst().getValeur().equals("VALET")
-                    || dist2.getPlayedCard().getFirst().getValeur().equals("DIX")
-                    || dist2.getPlayedCard().getFirst().getValeur().equals("SEPT")
-                    || dist2.getPlayedCard().getFirst().getValeur().equals("HUIT")) {
+            if (dist2.getPlayedCard().get(0).getValeur().equals("AS")
+                    || dist2.getPlayedCard().get(0).getValeur().equals("VALET")
+                    || dist2.getPlayedCard().get(0).getValeur().equals("DIX")
+                    || dist2.getPlayedCard().get(0).getValeur().equals("SEPT")
+                    || dist2.getPlayedCard().get(0).getValeur().equals("HUIT")) {
                 isSimpleCard = false;
             }
         }
@@ -109,8 +109,8 @@ public class DistributionTest {
         dist.distributeFirstCardOnTheTable();
         boolean isDeleteFromPacket = true;
         for (Card i : dist.getPacket()) {
-            if (i.getCouleur().equals(dist.getPlayedCard().getFirst().getCouleur())
-                    && i.getValeur().equals(dist.getPlayedCard().getFirst().getValeur())) {
+            if (i.getCouleur().equals(dist.getPlayedCard().get(0).getCouleur())
+                    && i.getValeur().equals(dist.getPlayedCard().get(0).getValeur())) {
                 isDeleteFromPacket = false;
             }
         }

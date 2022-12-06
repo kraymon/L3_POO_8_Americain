@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class Distribution {
 
@@ -13,24 +12,24 @@ public class Distribution {
             "QUATRE",
             "TROIS", "DEUX" };
 
-    public LinkedList<Card> getPacket() {
+    public List<Card> getPacket() {
         return packet;
     }
 
-    public void setPacket(LinkedList<Card> packet) {
+    public void setPacket(List<Card> packet) {
         this.packet = packet;
     }
 
-    public LinkedList<Card> getPlayedCard() {
+    public List<Card> getPlayedCard() {
         return playedCard;
     }
 
-    public void setPlayedCard(LinkedList<Card> playedCard) {
+    public void setPlayedCard(List<Card> playedCard) {
         this.playedCard = playedCard;
     }
 
-    private LinkedList<Card> packet = new LinkedList<>();
-    private LinkedList<Card> playedCard = new LinkedList<>();
+    private List<Card> packet = new LinkedList<>();
+    private List<Card> playedCard = new LinkedList<>();
     private static Random random = new Random();
 
     public Distribution() {
@@ -52,7 +51,7 @@ public class Distribution {
         for (int i = 0; i < 8; i++) {
             int randomIndex = random.nextInt(packet.size());
             hand.add(packet.get(randomIndex));
-            packet.remove(randomIndex);
+            packet.remove(packet.get(randomIndex));
         }
 
         return hand;

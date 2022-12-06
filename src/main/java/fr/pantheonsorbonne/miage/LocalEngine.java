@@ -124,7 +124,9 @@ public abstract class LocalEngine {
         for (int i = 0; i < number; i++) {
             if (!dist.getPacket().isEmpty()) {
                 player.getHand().add(dist.getRandomCard());
-            } else {
+            } 
+            /* 
+            else {
                 int initialSize = dist.getPlayedCard().size() - 1;
                 for (int j = 0; j < initialSize; j++) {
                     dist.getPacket().add(dist.getPlayedCard().poll());
@@ -133,6 +135,7 @@ public abstract class LocalEngine {
                 dist.getPlayedCard().add(dist.getPacket().pollLast());
                 number++;
             }
+            */
         }
     }
 
