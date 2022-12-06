@@ -58,6 +58,9 @@ public class Distribution {
     }
 
     public Card getRandomCard() {
+        if(getPacket().isEmpty()){
+            throw new IllegalStateException("Packet cannot be empty !");
+        }
         int randomIndex = random.nextInt(packet.size());
         Card carte = this.packet.get(randomIndex);
         this.packet.remove(randomIndex);

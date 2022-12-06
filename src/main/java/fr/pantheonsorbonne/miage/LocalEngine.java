@@ -1,4 +1,5 @@
 package fr.pantheonsorbonne.miage;
+import java.util.LinkedList;
 
 public abstract class LocalEngine {
 
@@ -125,17 +126,16 @@ public abstract class LocalEngine {
             if (!dist.getPacket().isEmpty()) {
                 player.getHand().add(dist.getRandomCard());
             } 
-            /* 
+             
             else {
-                int initialSize = dist.getPlayedCard().size() - 1;
-                for (int j = 0; j < initialSize; j++) {
-                    dist.getPacket().add(dist.getPlayedCard().poll());
+                LinkedList<Card> cartes =  (LinkedList<Card>) dist.getPlayedCard();
+                while(cartes.size()!=1){
+                    dist.getPacket().add(cartes.pollLast());
                 }
-
-                dist.getPlayedCard().add(dist.getPacket().pollLast());
+                dist.getPlayedCard().add(cartes.poll());
                 number++;
             }
-            */
+            
         }
     }
 

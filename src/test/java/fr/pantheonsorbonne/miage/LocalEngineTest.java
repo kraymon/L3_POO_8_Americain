@@ -139,10 +139,6 @@ public class LocalEngineTest {
         }
     }
     @Test
-    /*
-     * test si le huit est bien remove de la main
-     * test si le huit est bien add aux cartes jouées
-     */
     public void testPlayEight(){
         Local local = new Local();
         int countEight = 0;
@@ -227,11 +223,6 @@ public class LocalEngineTest {
        }
     }
     @Test
-    /*
-     * si  10 => playagain true
-     * si Valet playagain et nombre de joueur >2 => changeRotation
-     * manque le test avec une partie de 2 joueur et
-     */
     public void testverifyIfTenOrJack(){
         Local local = new Local();
         local.verifyIfTenOrJack("DIX");
