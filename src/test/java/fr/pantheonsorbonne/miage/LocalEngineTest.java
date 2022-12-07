@@ -1,6 +1,5 @@
 package fr.pantheonsorbonne.miage;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -11,15 +10,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class LocalEngineTest {
-    
-    @Test
-    public void testPlay() {
-        Local local = new Local();
-        local.play();
-        assertEquals(0, local.getInitialPlayers()[local.getNextPlayer()].getHand().size());
-    }
-    
-    
+    /*
+     * @Test
+     * public void testPlay() {
+     * Local local = new Local();
+     * local.play();
+     * assertEquals(0,
+     * local.getInitialPlayers()[local.getNextPlayer()].getHand().size());
+     * }
+     */
+
     @Test
     public void testChangeRotation() {
         Local local = new Local();
@@ -55,28 +55,38 @@ public class LocalEngineTest {
     @Test
     public void testPickCard() {
         Local local = new Local();
-        if (local.getInitialPlayers().length==3){
-            assertEquals(28, local.dist.getPacket().size());
-            Player player = new Player("player",local.dist.newRandomHand());
-            local.pickCard(2, player);
-            assertEquals(10, player.getHand().size());
-            boolean isDeleteFromPacket = true;
-            for (Card c : player.getHand()){
-                for (Card c2 : local.dist.getPacket()){
-                    if (c.getCouleur().equals(c2.getCouleur())
+        int taille = 52 - (8 * local.getInitialPlayers().length);
+        assertEquals(taille, local.dist.getPacket().size());
+        Player player = new Player("player", local.dist.newRandomHand());
+        local.pickCard(2, player);
+        assertEquals(10, player.getHand().size());
+        boolean isDeleteFromPacket = true;
+        for (Card c : player.getHand()) {
+            for (Card c2 : local.dist.getPacket()) {
+                if (c.getCouleur().equals(c2.getCouleur())
                         && c.getValeur().equals(c2.getValeur())) {
                     isDeleteFromPacket = false;
                 }
-                }
             }
-            assertTrue(isDeleteFromPacket);
-            assertEquals(18, local.dist.getPacket().size());
-            local.pickCard(18, player);
-            assertEquals(0, local.dist.getPlayedCard().size());
-            //local.pickCard(1, player);
-
         }
+        assertTrue(isDeleteFromPacket);
+        assertEquals(taille - 10, local.dist.getPacket().size());
+        local.pickCard(taille - 10, player);
+        assertEquals(0, local.dist.getPlayedCard().size());
 
+    }
+
+    @Test
+    public void testPickCardWhenPacketIsEmpty() {
+        Local local = new Local();
+        while (!local.dist.getPacket().isEmpty()) {
+            local.dist.getPlayedCard().add(local.dist.getPacket().get(0));
+            local.dist.getPacket().remove(0);
+        }
+        assertEquals(0, local.dist.getPacket().size());
+        local.pickCard(1, local.getInitialPlayers()[0]);
+        assertEquals(50 - (8 * local.getInitialPlayers().length), local.dist.getPacket().size());
+        assertEquals(9, local.getInitialPlayers()[0].getHand().size());
     }
 
     @Test
@@ -121,54 +131,55 @@ public class LocalEngineTest {
         assertEquals("test", p1.getName());
     }
 
-    public void testAsPlayed(){
-        Local local = new Local();
-        int nbAsInHand = 0;
-        for(Card carte : local.getInitialPlayers()[0].getHand()){
-            if(carte.getValeur().equals("AS")){
-                nbAsInHand++;
-            }
-        }
-        local.asPlayed(local.getInitialPlayers()[0]);
-        assertEquals(nbAsInHand,local.getNbAs());
-        if(nbAsInHand==0){
-            assertTrue(local.getasPicked());
-        }
-        else{
-            assertFalse(local.getasPicked());
-        }
-    }
     @Test
-    public void testPlayEight(){
+    public void testAsPlayed() {
+        Local local = new Local();
+        ArrayList<Card> hand = new ArrayList<>();
+        Card carte1 = new Card("DEUX", "COEUR");
+        hand.add(carte1);
+        Player p = new Player("test", hand);
+        local.asPlayed(p);
+        assertEquals(3, p.getHand().size());
+        assertTrue(local.getasPicked());
+        assertEquals(0, local.getNbAs());
+        Card carte2 = new Card("AS", "COEUR");
+        hand.add(carte2);
+        local.asPlayed(p);
+        assertEquals(1, local.getNbAs());
+        assertEquals(3, p.getHand().size());
+        assertEquals(1, local.dist.getPlayedCard().size());
+    }
+
+    @Test
+    public void testPlayEight() {
         Local local = new Local();
         int countEight = 0;
-        int indexHandWithEight =0;
-        for(int i=0; i<local.getInitialPlayers().length;i++){
-            for(Card card : local.getInitialPlayers()[i].getHand()){
-                if(card.getValeur().equals("HUIT")){
+        int indexHandWithEight = 0;
+        for (int i = 0; i < local.getInitialPlayers().length; i++) {
+            for (Card card : local.getInitialPlayers()[i].getHand()) {
+                if (card.getValeur().equals("HUIT")) {
                     countEight++;
-                    indexHandWithEight=i;
+                    indexHandWithEight = i;
                 }
             }
         }
         List<Card> test = new ArrayList<>();
         Player player = new Player("test", test);
-        if(countEight<4){
+        if (countEight < 4) {
             Card carte = local.dist.getRandomCard();
-            String valeur=carte.getValeur();
-            while(valeur!="HUIT"){
+            String valeur = carte.getValeur();
+            while (valeur != "HUIT") {
                 carte = local.dist.getRandomCard();
-                valeur=carte.getValeur();
+                valeur = carte.getValeur();
             }
             local.getInitialPlayers()[0].getHand().add(carte);
             player = local.getInitialPlayers()[0];
-        }
-        else{
-            player = local.getInitialPlayers()[indexHandWithEight-1];
+        } else {
+            player = local.getInitialPlayers()[indexHandWithEight - 1];
         }
         int indexEight = 0;
-        for(int i =0;i<player.getHand().size();i++){
-            if(player.getHand().get(i).getValeur().equals("HUIT")){
+        for (int i = 0; i < player.getHand().size(); i++) {
+            if (player.getHand().get(i).getValeur().equals("HUIT")) {
                 indexEight = i;
             }
         }
@@ -177,58 +188,61 @@ public class LocalEngineTest {
         assertTrue(local.dist.getPlayedCard().contains(carte));
         assertFalse(local.getInitialPlayers()[0].getHand().contains(carte));
     }
+
     @Test
-    public void testPlayCombination(){
+    public void testPlayCombination() {
         Local local = new Local();
         int countValet = 0;
-        int indexHandWithValet =0;
-        for(Player player : local.getInitialPlayers()){
+        int indexHandWithValet = 0;
+        for (Player player : local.getInitialPlayers()) {
             indexHandWithValet++;
-            for(Card card : player.getHand()){
-                if(card.getValeur().equals("VALET")){
+            for (Card card : player.getHand()) {
+                if (card.getValeur().equals("VALET")) {
                     countValet++;
                 }
             }
         }
         List<Card> test = new ArrayList<>();
         Player player = new Player("test", test);
-        if(countValet<4){
+        if (countValet < 4) {
             Card carte = local.dist.getRandomCard();
-            String valeur=carte.getValeur();
-            while(valeur!="VALET"){
+            String valeur = carte.getValeur();
+            while (valeur != "VALET") {
                 carte = local.dist.getRandomCard();
-                valeur=carte.getValeur();
+                valeur = carte.getValeur();
             }
             local.getInitialPlayers()[0].getHand().add(carte);
             player = local.getInitialPlayers()[0];
-        }
-        else{
-            player = local.getInitialPlayers()[indexHandWithValet-1];
+        } else {
+            player = local.getInitialPlayers()[indexHandWithValet - 1];
         }
         countValet = 0;
-        for(Card card : player.getHand()){
-            if(card.getValeur().equals("VALET")){
+        for (Card card : player.getHand()) {
+            if (card.getValeur().equals("VALET")) {
                 countValet++;
             }
         }
-        local.playCombination("VALET",player);
-       boolean isValetDeleteFromHand = true;
-       for(Card card : player.getHand()){
-        if(card.getValeur().equals("VALET")){
-            isValetDeleteFromHand=false;
-            break;
+        local.playCombination("VALET", player);
+        boolean isValetDeleteFromHand = true;
+        for (Card card : player.getHand()) {
+            if (card.getValeur().equals("VALET")) {
+                isValetDeleteFromHand = false;
+                break;
+            }
+            assertTrue(isValetDeleteFromHand);
         }
-        assertTrue(isValetDeleteFromHand);
-        //assertEquals(countValet,local.dist.getPlayedCard().size());
-       }
     }
+
     @Test
-    public void testverifyIfTenOrJack(){
+    public void testverifyIfTenOrJack() {
         Local local = new Local();
         local.verifyIfTenOrJack("DIX");
         assertTrue(local.getPlayAgain());
         local.verifyIfTenOrJack("VALET");
+        if(local.getInitialPlayers().length == 2){
+            assertTrue(local.getClockwise());
+        }else{
         assertFalse(local.getClockwise());
-        local.setPlayAgain();
+        }
     }
 }
