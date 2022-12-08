@@ -78,6 +78,12 @@ public class Distribution {
         } while (carte.getValeur().equals("AS") || carte.getValeur().equals("VALET") || carte.getValeur().equals("DIX")
                 || carte.getValeur().equals("SEPT") || carte.getValeur().equals("HUIT"));
         playedCard.add(carte);
+        showFirstCard(carte);
         packet.remove(randomIndex);
+    }
+
+    private void showFirstCard(Card carte){
+        System.out.print("Première Carte : ");
+        carte.showCard();
     }
 }

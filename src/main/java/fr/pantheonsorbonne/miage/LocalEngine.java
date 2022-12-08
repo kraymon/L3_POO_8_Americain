@@ -75,18 +75,13 @@ public abstract class LocalEngine {
         dist.distributeFirstCardOnTheTable();
 
         while (true) {
-
-            System.out.println(
-                    "Carte jouée : " + dist.getPlayedCard().get(dist.getPlayedCard().size() - 1).getValeur() + " "
-                            + dist.getPlayedCard().get(dist.getPlayedCard().size() - 1).getCouleur());
-            System.out.println();
-
+            
             getInitialPlayers()[nextPlayer].showHand();
 
             playCard(getInitialPlayers()[nextPlayer]);
 
             if (getInitialPlayers()[nextPlayer].getHand().isEmpty()) {
-                System.out.println(getInitialPlayers()[nextPlayer].getName() + " a gagné");
+                showWinner();
                 break;
             }
             nextTurnIndex();
@@ -118,6 +113,7 @@ public abstract class LocalEngine {
         } else {
             clockwise = true;
         }
+        showChangeRotation();
     }
 
     public void pickCard(int number, Player player) {
@@ -135,6 +131,7 @@ public abstract class LocalEngine {
             }
             
         }
+        player.showNumberPickedCard(number);
     }
 
     public String chooseColor(Player player) {
@@ -171,6 +168,7 @@ public abstract class LocalEngine {
             if (card.getValeur().equals("AS")) {
                 addAs();
                 dist.getPlayedCard().add(card);
+                player.showPlayedCard(card);
                 player.getHand().remove(card);
                 return;
             }
@@ -182,20 +180,26 @@ public abstract class LocalEngine {
 
     public void playEight(int indexEight, Player player) {
         dist.getPlayedCard().add(player.getHand().get(indexEight));
+        player.showPlayedCard(player.getHand().get(indexEight));
         player.getHand().remove(indexEight);
         asPicked = false;
         sevenStopped = false;
         lastColorChosen = chooseColor(getInitialPlayers()[nextPlayer]);
+        showLastColorChosen(lastColorChosen, getInitialPlayers()[nextPlayer]);
+
     }
 
     public void playCombination(String toCombinate, Player player) {
-        for (int j = 0; j < player.getHand().size(); j++) {
+        int j;
+        for (j = 0; j < player.getHand().size(); j++) {
             if (toCombinate.equals(player.getHand().get(j).getValeur())) {
                 dist.getPlayedCard().add(player.getHand().get(j));
+                player.showPlayedCard(player.getHand().get(j));
                 if (player.getHand().get(j).getValeur().equals("VALET") && getInitialPlayers().length != 2) {
                     changeRotation();
                 }
                 player.getHand().remove(player.getHand().get(j));
+                j--;
             }
         }
     }
@@ -203,6 +207,9 @@ public abstract class LocalEngine {
     public void verifyIfTenOrJack(String valeur) {
         if (valeur.equals("DIX")) {
             playAgain = true;
+            if(!getInitialPlayers()[nextPlayer].getHand().isEmpty()){
+                getInitialPlayers()[nextPlayer].showPlayerCanReplay();
+            }
         } else if (valeur.equals("VALET")) {
             if (getInitialPlayers().length == 2) {
                 playAgain = true;
@@ -229,6 +236,7 @@ public abstract class LocalEngine {
 
         else if (lastValue.equals("SEPT") && !sevenStopped) {
             sevenStopped = true;
+            showBlockedPlayer(getInitialPlayers()[nextPlayer]);
             return;
         }
 
@@ -244,11 +252,11 @@ public abstract class LocalEngine {
             if ((lastColor.equals(card.getCouleur()) || lastValue.equals(card.getValeur()))
                     && !card.getValeur().equals("HUIT")) {
                 dist.getPlayedCard().add(card);
-                verifyIfTenOrJack(card.getValeur());
+                player.showPlayedCard(card);
                 String toCombinate = card.getValeur();
                 player.getHand().remove(card);
-                // combination of cards
                 verifyIfPlayerCanCombinate(toCombinate, player);
+                verifyIfTenOrJack(card.getValeur());
                 asPicked = false;
                 sevenStopped = false;
                 return;
@@ -264,5 +272,22 @@ public abstract class LocalEngine {
         }
 
         pickCard(1, player);
+    }
+
+    public void showWinner(){
+        System.out.println();
+        System.out.println(getInitialPlayers()[nextPlayer].getName() + " a gagné");
+    }
+
+    public void showBlockedPlayer(Player p){
+        System.out.println(p.getName()+" est bloqué(e)");
+    }
+
+    public void showLastColorChosen(String lastColorChosen, Player p){
+        System.out.println(p.getName()+" veut du "+lastColorChosen);
+    }
+
+    public void showChangeRotation(){
+        System.out.println("Le sens a changé !");
     }
 }

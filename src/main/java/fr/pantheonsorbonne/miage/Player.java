@@ -20,11 +20,26 @@ public class Player {
     }
 
     public void showHand() {
+        System.out.println();
         System.out.println("main de " + name);
         for (Card card : hand) {
-            System.out.println(card.getValeur() + " " + card.getCouleur());
+            card.showCard();
         }
         System.out.println();
+        
     }
+
+    public void showPlayedCard(Card carte){
+        System.out.print(name+" a joué : ");
+        carte.showCard();
+    }
+
+    public void showNumberPickedCard(int n){
+        System.out.println(name+" a pioché(e) "+n+" carte(s)");
+   }
+
+   public void showPlayerCanReplay(){
+        System.out.println(name+" doit rejouer");
+   }
 
 }
