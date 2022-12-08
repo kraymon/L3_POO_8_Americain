@@ -1,7 +1,5 @@
 package fr.pantheonsorbonne.miage;
 
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,13 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit test for simple App.
- */
+
 public class DistributionTest {
-    /**
-     * Rigorous Test :-)
-     */
+    
     @Test
     public void testSizeCreatePacket() {
         Distribution dist = new Distribution();

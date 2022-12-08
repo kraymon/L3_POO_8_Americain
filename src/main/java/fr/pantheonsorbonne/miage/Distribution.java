@@ -12,25 +12,17 @@ public class Distribution {
             "QUATRE",
             "TROIS", "DEUX" };
 
+    private List<Card> packet = new LinkedList<>();
+    private List<Card> playedCard = new LinkedList<>();
+    private static Random random = new Random();
+
     public List<Card> getPacket() {
         return packet;
-    }
-
-    public void setPacket(List<Card> packet) {
-        this.packet = packet;
     }
 
     public List<Card> getPlayedCard() {
         return playedCard;
     }
-
-    public void setPlayedCard(List<Card> playedCard) {
-        this.playedCard = playedCard;
-    }
-
-    private List<Card> packet = new LinkedList<>();
-    private List<Card> playedCard = new LinkedList<>();
-    private static Random random = new Random();
 
     public Distribution() {
         this.createPacket();

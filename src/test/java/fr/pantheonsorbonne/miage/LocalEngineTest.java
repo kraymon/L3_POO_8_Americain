@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class LocalEngineTest {
-    /*
-     * @Test
-     * public void testPlay() {
-     * Local local = new Local();
-     * local.play();
-     * assertEquals(0,local.getInitialPlayers()[local.getNextPlayer()].getHand().size());
-     * }
-     */
+    
+    @Test
+    public void testPlay() {
+    Local local = new Local();
+    local.play();
+    assertEquals(0,local.getInitialPlayers()[local.getNextPlayer()].getHand().size());
+    }
+     
 
     @Test
     public void testChangeRotation() {

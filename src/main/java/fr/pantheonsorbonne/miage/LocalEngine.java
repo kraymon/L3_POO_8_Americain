@@ -11,8 +11,6 @@ public abstract class LocalEngine {
     private boolean clockwise = true;
     Distribution dist = new Distribution();
 
-    protected LocalEngine(){}
-
     public boolean getClockwise() {
         return clockwise;
     }
@@ -21,9 +19,6 @@ public abstract class LocalEngine {
         return asPicked;
     }
 
-    public boolean getSevenStopped() {
-        return sevenStopped;
-    }
 
     public int getNbAs() {
         return nbAs;
@@ -39,22 +34,6 @@ public abstract class LocalEngine {
 
     public String getLastColorChosen() {
         return lastColorChosen;
-    }
-
-    public void setAsPicked() {
-        if (asPicked) {
-            asPicked = false;
-        } else {
-            asPicked = true;
-        }
-    }
-
-    public void setSevenStopped() {
-        if (sevenStopped) {
-            sevenStopped = false;
-        } else {
-            sevenStopped = true;
-        }
     }
 
     public void setPlayAgain() {
@@ -89,7 +68,7 @@ public abstract class LocalEngine {
         }
     }
 
-    public void nextTurnIndex() {
+    protected void nextTurnIndex() {
         if (!playAgain) {
             if (clockwise) {
                 nextPlayer++;
@@ -107,7 +86,7 @@ public abstract class LocalEngine {
         }
     }
 
-    public void changeRotation() {
+    protected void changeRotation() {
         if (clockwise) {
             clockwise = false;
         } else {
@@ -116,7 +95,7 @@ public abstract class LocalEngine {
         showChangeRotation();
     }
 
-    public void pickCard(int number, Player player) {
+    protected void pickCard(int number, Player player) {
         for (int i = 0; i < number; i++) {
             if (!dist.getPacket().isEmpty()) {
                 player.getHand().add(dist.getRandomCard());
@@ -134,7 +113,7 @@ public abstract class LocalEngine {
         player.showNumberPickedCard(number);
     }
 
-    public String chooseColor(Player player) {
+    protected String chooseColor(Player player) {
         String[] tabColor = { "PIQUE", "TREFLE", "COEUR", "CARREAU" };
         int max = 0;
         String maxColor = "";
@@ -154,16 +133,16 @@ public abstract class LocalEngine {
         return maxColor;
     }
 
-    public void plusTwo(Player player) {
+    protected void plusTwo(Player player) {
         pickCard(nbAs * 2, player);
         nbAs = 0;
     }
 
-    public void addAs() {
+    protected void addAs() {
         nbAs++;
     }
 
-    public void asPlayed(Player player) {
+    protected void asPlayed(Player player) {
         for (Card card : player.getHand()) {
             if (card.getValeur().equals("AS")) {
                 addAs();
@@ -178,7 +157,7 @@ public abstract class LocalEngine {
         asPicked = true;
     }
 
-    public void playEight(int indexEight, Player player) {
+    protected void playEight(int indexEight, Player player) {
         dist.getPlayedCard().add(player.getHand().get(indexEight));
         player.showPlayedCard(player.getHand().get(indexEight));
         player.getHand().remove(indexEight);
@@ -189,7 +168,7 @@ public abstract class LocalEngine {
 
     }
 
-    public void playCombination(String toCombinate, Player player) {
+    protected void playCombination(String toCombinate, Player player) {
         int j;
         for (j = 0; j < player.getHand().size(); j++) {
             if (toCombinate.equals(player.getHand().get(j).getValeur())) {
@@ -204,7 +183,7 @@ public abstract class LocalEngine {
         }
     }
 
-    public void verifyIfTenOrJack(String valeur) {
+    protected void verifyIfTenOrJack(String valeur) {
         if (valeur.equals("DIX")) {
             playAgain = true;
             if(!getInitialPlayers()[nextPlayer].getHand().isEmpty()){
@@ -219,13 +198,13 @@ public abstract class LocalEngine {
         }
     }
 
-    public void verifyIfPlayerCanCombinate(String toCombinate, Player player) {
+    protected void verifyIfPlayerCanCombinate(String toCombinate, Player player) {
         if (!toCombinate.equals("AS")) {
             playCombination(toCombinate, player);
         }
     }
 
-    public void playCard(Player player) {
+    protected void playCard(Player player) {
         Card lastPlayedCard = dist.getPlayedCard().get(dist.getPlayedCard().size() - 1);
         String lastColor = lastPlayedCard.getCouleur();
         String lastValue = lastPlayedCard.getValeur();
@@ -274,20 +253,20 @@ public abstract class LocalEngine {
         pickCard(1, player);
     }
 
-    public void showWinner(){
+    private void showWinner(){
         System.out.println();
         System.out.println(getInitialPlayers()[nextPlayer].getName() + " a gagné");
     }
 
-    public void showBlockedPlayer(Player p){
+    private void showBlockedPlayer(Player p){
         System.out.println(p.getName()+" est bloqué(e)");
     }
 
-    public void showLastColorChosen(String lastColorChosen, Player p){
+    private void showLastColorChosen(String lastColorChosen, Player p){
         System.out.println(p.getName()+" veut du "+lastColorChosen);
     }
 
-    public void showChangeRotation(){
+    private void showChangeRotation(){
         System.out.println("Le sens a changé !");
     }
 }
