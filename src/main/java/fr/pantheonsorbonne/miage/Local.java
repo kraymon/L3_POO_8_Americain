@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.miage;
 
-public class Local extends LocalEngine {
+public class Local extends GameEngine {
 
     private Player[] players = new Player[3];
 

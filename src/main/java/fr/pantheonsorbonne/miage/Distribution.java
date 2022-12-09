@@ -50,7 +50,7 @@ public class Distribution {
     }
 
     public Card getRandomCard() {
-        if(getPacket().isEmpty()){
+        if (getPacket().isEmpty()) {
             throw new IllegalStateException("Packet cannot be empty !");
         }
         int randomIndex = random.nextInt(packet.size());
@@ -74,7 +74,7 @@ public class Distribution {
         packet.remove(randomIndex);
     }
 
-    private void showFirstCard(Card carte){
+    private void showFirstCard(Card carte) {
         System.out.print("Première Carte : ");
         carte.showCard();
     }

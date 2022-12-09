@@ -8,15 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class LocalEngineTest {
-    
+public class GameEngineTest {
+
     @Test
     public void testPlay() {
-    Local local = new Local();
-    local.play();
-    assertEquals(0,local.getInitialPlayers()[local.getNextPlayer()].getHand().size());
+        Local local = new Local();
+        local.play();
+        assertEquals(0, local.getInitialPlayers()[local.getNextPlayer()].getHand().size());
     }
-     
 
     @Test
     public void testChangeRotation() {
@@ -89,7 +88,7 @@ public class LocalEngineTest {
 
     @Test
     public void testChooseColor() {
-        LocalEngine local = new Local();
+        Local local = new Local();
         ArrayList<Card> hand = new ArrayList<>();
         Card carte1 = new Card("DEUX", "COEUR");
         Card carte2 = new Card("TROIS", "PIQUE");
@@ -150,7 +149,7 @@ public class LocalEngineTest {
 
     @Test
     public void testPlayEight() {
-        
+
         Local local = new Local();
 
         ArrayList<Card> hand = new ArrayList<>();
@@ -162,7 +161,6 @@ public class LocalEngineTest {
         assertEquals(1, local.dist.getPlayedCard().size());
     }
 
-    
     @Test
     public void testPlayCombination() {
         Local local = new Local();
@@ -183,7 +181,7 @@ public class LocalEngineTest {
         hand.add(carte4);
 
         local.playCombination("VALET", p);
-        if(local.getInitialPlayers().length!=2){
+        if (local.getInitialPlayers().length != 2) {
             assertTrue(local.getClockwise());
         }
 
@@ -195,15 +193,15 @@ public class LocalEngineTest {
         local.verifyIfTenOrJack("DIX");
         assertTrue(local.getPlayAgain());
         local.verifyIfTenOrJack("VALET");
-        if(local.getInitialPlayers().length == 2){
+        if (local.getInitialPlayers().length == 2) {
             assertTrue(local.getClockwise());
-        }else{
-        assertFalse(local.getClockwise());
+        } else {
+            assertFalse(local.getClockwise());
         }
     }
-    
+
     @Test
-    public void testPlayCard(){
+    public void testPlayCard() {
         Local local = new Local();
         ArrayList<Card> hand = new ArrayList<>();
         Card carte1 = new Card("QUATRE", "COEUR");
@@ -215,7 +213,7 @@ public class LocalEngineTest {
         Card carte3 = new Card("SIX", "PIQUE");
         hand.add(carte3);
         local.playCard(p);
-        assertEquals(0,p.getHand().size());
-        assertEquals(3,local.dist.getPlayedCard().size());
+        assertEquals(0, p.getHand().size());
+        assertEquals(3, local.dist.getPlayedCard().size());
     }
 }

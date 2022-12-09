@@ -1,6 +1,6 @@
 package fr.pantheonsorbonne.miage;
 
-public abstract class LocalEngine {
+public abstract class GameEngine {
 
     private int nbAs = 0;
     private boolean asPicked = false;
@@ -18,7 +18,6 @@ public abstract class LocalEngine {
     public boolean getasPicked() {
         return asPicked;
     }
-
 
     public int getNbAs() {
         return nbAs;
@@ -43,8 +42,9 @@ public abstract class LocalEngine {
             playAgain = true;
         }
     }
+
     public void setNbAs(int nb) {
-        nbAs=nb;
+        nbAs = nb;
     }
 
     protected abstract Player[] getInitialPlayers();
@@ -54,7 +54,7 @@ public abstract class LocalEngine {
         dist.distributeFirstCardOnTheTable();
 
         while (true) {
-            
+
             getInitialPlayers()[nextPlayer].showHand();
 
             playCard(getInitialPlayers()[nextPlayer]);
@@ -99,16 +99,16 @@ public abstract class LocalEngine {
         for (int i = 0; i < number; i++) {
             if (!dist.getPacket().isEmpty()) {
                 player.getHand().add(dist.getRandomCard());
-            } 
-             
+            }
+
             else {
-                while(dist.getPlayedCard().size()!=1){
+                while (dist.getPlayedCard().size() != 1) {
                     dist.getPacket().add(dist.getPlayedCard().get(0));
                     dist.getPlayedCard().remove(dist.getPlayedCard().get(0));
                 }
                 number++;
             }
-            
+
         }
         player.showNumberPickedCard(number);
     }
@@ -186,7 +186,7 @@ public abstract class LocalEngine {
     protected void verifyIfTenOrJack(String valeur) {
         if (valeur.equals("DIX")) {
             playAgain = true;
-            if(!getInitialPlayers()[nextPlayer].getHand().isEmpty()){
+            if (!getInitialPlayers()[nextPlayer].getHand().isEmpty()) {
                 getInitialPlayers()[nextPlayer].showPlayerCanReplay();
             }
         } else if (valeur.equals("VALET")) {
@@ -253,20 +253,20 @@ public abstract class LocalEngine {
         pickCard(1, player);
     }
 
-    private void showWinner(){
+    private void showWinner() {
         System.out.println();
         System.out.println(getInitialPlayers()[nextPlayer].getName() + " a gagné");
     }
 
-    private void showBlockedPlayer(Player p){
-        System.out.println(p.getName()+" est bloqué(e)");
+    private void showBlockedPlayer(Player p) {
+        System.out.println(p.getName() + " est bloqué(e)");
     }
 
-    private void showLastColorChosen(String lastColorChosen, Player p){
-        System.out.println(p.getName()+" veut du "+lastColorChosen);
+    private void showLastColorChosen(String lastColorChosen, Player p) {
+        System.out.println(p.getName() + " veut du " + lastColorChosen);
     }
 
-    private void showChangeRotation(){
+    private void showChangeRotation() {
         System.out.println("Le sens a changé !");
     }
 }

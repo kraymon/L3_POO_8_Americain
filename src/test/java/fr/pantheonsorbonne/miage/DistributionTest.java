@@ -8,9 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-
 public class DistributionTest {
-    
+
     @Test
     public void testSizeCreatePacket() {
         Distribution dist = new Distribution();
@@ -70,11 +69,10 @@ public class DistributionTest {
         assertEquals(51, dist.getPacket().size());
         assertFalse(dist.getPacket().contains(card));
 
-       
         while (!dist.getPacket().isEmpty()) {
             dist.getPacket().remove(0);
         }
-        
+
         assertThrows(IllegalStateException.class, () -> dist.getRandomCard());
 
     }

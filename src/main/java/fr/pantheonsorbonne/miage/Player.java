@@ -26,20 +26,20 @@ public class Player {
             card.showCard();
         }
         System.out.println();
-        
+
     }
 
-    public void showPlayedCard(Card carte){
-        System.out.print(name+" a joué : ");
+    public void showPlayedCard(Card carte) {
+        System.out.print(name + " a joué : ");
         carte.showCard();
     }
 
-    public void showNumberPickedCard(int n){
-        System.out.println(name+" a pioché(e) "+n+" carte(s)");
-   }
+    public void showNumberPickedCard(int n) {
+        System.out.println(name + " a pioché(e) " + n + " carte(s)");
+    }
 
-   public void showPlayerCanReplay(){
-        System.out.println(name+" doit rejouer");
-   }
+    public void showPlayerCanReplay() {
+        System.out.println(name + " doit rejouer");
+    }
 
 }

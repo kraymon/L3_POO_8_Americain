@@ -18,7 +18,7 @@ public class Card {
         return this.couleur;
     }
 
-    public void showCard(){
+    public void showCard() {
         System.out.println(this.getValeur() + " " + this.getCouleur());
     }
 
