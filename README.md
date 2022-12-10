@@ -4,29 +4,34 @@ Le jeu se joue à au moins deux joueurs et comporte un maitre du jeu non joueur.
 
 ## Mise en place
 
-Chaque joueur reçoit un nombre déterminé de cartes tirées aléatoirement, qu'il garde face cachée.
+Chaque joueur reçoit 8 cartes tirées aléatoirement et une carte aléatoire est posée au milieu.
 
 ## Déroulé de la partie
 
-Les joueurs sont répartis dans l'ordre d'arrivée. Chaque joueur affronte le prochain dans un duel, à tour de rôle (le dernier joueur affronte le premier). Si un joueur n'a plus de carte, il perd la partie et ne peut plus joueur.
+Les joueurs jouent les uns après les autres et doivent déposer une carte et s'ils ne peuvent pas, en piochent une.
 
-### Déroulé des duels
+### Comment jouer une carte ?
 
-* Lors d'un duel, chacun de joueur joue une carte de sa pile. Le joueur ayant joué la carte de plus haute valeur l'emporte et met sous sa pile les cartes jouées, en les mélangeant.
-* Si les deux joueurs ont joué une carte de même valeur, le duel recommence en accumulant les cartes jouées de telle sorte à ce que le gagnant empoche la totalité des cartes du duel.
+* Il n'est possible de déposer une carte seulement si elle est de même couleur et/ou valeur que la carte posée au milieu.
+* Si un joueur possède une ou plusieurs cartes de la même valeur que la carte qu'il peut poser, alors il peut toutes les poser lors d'un même tour.
+* Huit : les joueurs peuvent poser cette carte sans contrainte de valeur ou de couleur. De plus, elle permet de choisir la couleur de la prochaine carte jouée.
+* Valet : le joueur qui pose cette carte change le sens du jeu. S'il n'y a que deux joueurs, alors elle lui permet de rejouer.
+* Dix : le joueur qui pose cette carte peut rejouer.
+* Sept : le joueur qui pose cette carte bloque le tour du prochain joueur.
+* As : le joueur qui pose cette carte fait piocher 2 cartes au prochain joueur sauf si ce dernier est également en possession d'un as. Dans ce cas, le nombre de carte à piocher se cumule pour le prochain (multiple de deux).
 
 ## Fin de la partie
 
-Le gagnant est le dernier joueur en lice.
+Le gagnant est le premier joueur à ne plus avoir de carte dans la main.
 
 ### Détail des classes principales
 
-Un exemple de jeu supportant le réseau
+Un exemple de jeu
 
-* LocalWarGame la version du jeu supportant le jeu en local
-* WarGameEngine le moteur du jeu
-* WarGameNetorkPlayer le joueur distant en cas de partie réseau
-* WarGameNetworkEngine la version du jeu supportant le réseau
+* Local la version du jeu supportant le jeu en local
+* GameEngine le moteur du jeu
+* GameNetorkPlayer le joueur distant en cas de partie réseau
+* GameNetworkEngine la version du jeu supportant le réseau
 
 
 # Protocole réseau

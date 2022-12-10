@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Cette classe crée le deck, gère la distribution de cartes et les cartes
+ * jouées.
+ */
 public class Distribution {
 
     private static final String[] COULEUR = { "COEUR", "CARREAU", "PIQUE", "TREFLE" };
@@ -28,6 +32,9 @@ public class Distribution {
         this.createPacket();
     }
 
+    /**
+     * Cette méthode crée un deck de 52 cartes à partir des 10 valeurs et 4 couleurs
+     */
     private void createPacket() {
         for (String valeur : VALEUR) {
             for (String couleur : COULEUR) {
@@ -37,8 +44,14 @@ public class Distribution {
         }
     }
 
+    /**
+     * Cette méthode crée une nouvelle main de 8 cartes tirées aléatoirement dans le
+     * deck
+     * 
+     * @return la main crée
+     */
     public List<Card> newRandomHand() {
-        ArrayList<Card> hand = new ArrayList<>();
+        List<Card> hand = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
             int randomIndex = random.nextInt(packet.size());
@@ -49,6 +62,14 @@ public class Distribution {
         return hand;
     }
 
+    /**
+     * Cette méthode tire une seule carte aléatoirement dans le deck
+     * <p>
+     * si le deck est vide la méthode lance une exception
+     * 
+     * @return la carte
+     * @throw IllegalStateException si le deck est vide
+     */
     public Card getRandomCard() {
         if (getPacket().isEmpty()) {
             throw new IllegalStateException("Packet cannot be empty !");
@@ -61,6 +82,10 @@ public class Distribution {
 
     }
 
+    /**
+     * Cette méthode ajoute la première carte jouée non spéciale aléatoirement à
+     * partir du deck
+     */
     public void distributeFirstCardOnTheTable() {
         Card carte;
         int randomIndex;
@@ -74,6 +99,11 @@ public class Distribution {
         packet.remove(randomIndex);
     }
 
+    /**
+     * Cette méthode affiche la première carte jouée
+     * 
+     * @param carte a afficher
+     */
     private void showFirstCard(Card carte) {
         System.out.print("Première Carte : ");
         carte.showCard();
