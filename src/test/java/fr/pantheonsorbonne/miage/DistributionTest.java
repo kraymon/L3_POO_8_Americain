@@ -50,6 +50,15 @@ public class DistributionTest {
     }
 
     @Test
+    public void testWhenTooManyHands() {
+        Distribution dist = new Distribution();
+        for (int i = 0; i < 6; i++) {
+            dist.newRandomHand();
+        }
+        assertThrows(IllegalStateException.class, () -> dist.newRandomHand());
+    }
+
+    @Test
     public void CardsInHandRemovedInPacket() {
         Distribution dist = new Distribution();
 

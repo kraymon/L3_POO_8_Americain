@@ -54,7 +54,7 @@ public class GameEngineTest {
         Local local = new Local();
         int taille = 52 - (8 * local.getInitialPlayers().length);
         assertEquals(taille, local.dist.getPacket().size());
-        Player player = new Player("player", local.dist.newRandomHand());
+        Player player = local.getInitialPlayers()[0];
         local.pickCard(2, player);
         assertEquals(10, player.getHand().size());
         boolean isDeleteFromPacket = true;
@@ -67,8 +67,8 @@ public class GameEngineTest {
             }
         }
         assertTrue(isDeleteFromPacket);
-        assertEquals(taille - 10, local.dist.getPacket().size());
-        local.pickCard(taille - 10, player);
+        assertEquals(taille - 2, local.dist.getPacket().size());
+        local.pickCard(taille - 2, player);
         assertEquals(0, local.dist.getPlayedCard().size());
 
     }
@@ -103,14 +103,15 @@ public class GameEngineTest {
     @Test
     public void testPlusTwo() {
         Local local = new Local();
-        Distribution dist = new Distribution();
-        Player p1 = new Player("test", dist.newRandomHand());
+        Player p1 = local.getInitialPlayers()[0];
         local.setNbAs(1);
-        local.plusTwo(p1);
+        local.plusTwo(local.getInitialPlayers()[0]);
         assertEquals(10, p1.getHand().size());
-        local.setNbAs(2);
-        local.plusTwo(p1);
-        assertEquals(14, p1.getHand().size());
+        if (local.getInitialPlayers().length < 6) {
+            local.setNbAs(2);
+            local.plusTwo(p1);
+            assertEquals(14, p1.getHand().size());
+        }
     }
 
     @Test

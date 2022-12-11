@@ -19,6 +19,7 @@ public class Distribution {
     private List<Card> packet = new LinkedList<>();
     private List<Card> playedCard = new LinkedList<>();
     private static Random random = new Random();
+    private int numberOfPlayer = 0;
 
     public List<Card> getPacket() {
         return packet;
@@ -51,6 +52,10 @@ public class Distribution {
      * @return la main crée
      */
     public List<Card> newRandomHand() {
+        numberOfPlayer++;
+        if (numberOfPlayer > 6) {
+            throw new IllegalStateException("Too many players ! 6 players max");
+        }
         List<Card> hand = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
