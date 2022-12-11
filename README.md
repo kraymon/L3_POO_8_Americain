@@ -1,6 +1,6 @@
 # Règles
 
-Le jeu se joue à au moins deux joueurs et comporte un maitre du jeu non joueur.
+Le jeu se joue à au moins deux joueurs et au maximum 6 joueurs.
 
 ## Mise en place
 
