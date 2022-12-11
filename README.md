@@ -30,7 +30,7 @@ Un exemple de jeu
 
 * Local la version du jeu supportant le jeu en local
 * GameEngine le moteur du jeu
-* GameNetorkPlayer le joueur distant en cas de partie réseau
+* GameNetworkPlayer le joueur distant en cas de partie réseau
 * GameNetworkEngine la version du jeu supportant le réseau
 
 
