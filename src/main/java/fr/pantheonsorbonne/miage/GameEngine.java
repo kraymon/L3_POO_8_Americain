@@ -144,6 +144,7 @@ public abstract class GameEngine {
 
     protected void asPlayed(Player player) {
         for (Card card : player.getHand()) {
+            //better use enum than string representation
             if (card.getValeur().equals("AS")) {
                 addAs();
                 dist.getPlayedCard().add(card);
@@ -169,6 +170,7 @@ public abstract class GameEngine {
     }
 
     protected void playCombination(String toCombinate, Player player) {
+        //you should have used a foreach instead
         int j;
         for (j = 0; j < player.getHand().size(); j++) {
             if (toCombinate.equals(player.getHand().get(j).getValeur())) {
@@ -182,7 +184,7 @@ public abstract class GameEngine {
             }
         }
     }
-
+    //it does more that verifying imho
     protected void verifyIfTenOrJack(String valeur) {
         if (valeur.equals("DIX")) {
             playAgain = true;
@@ -203,7 +205,7 @@ public abstract class GameEngine {
             playCombination(toCombinate, player);
         }
     }
-
+    //very long and hard to understand method
     protected void playCard(Player player) {
         Card lastPlayedCard = dist.getPlayedCard().get(dist.getPlayedCard().size() - 1);
         String lastColor = lastPlayedCard.getCouleur();

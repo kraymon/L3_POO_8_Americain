@@ -97,11 +97,15 @@ public class Distribution {
         do {
             randomIndex = random.nextInt(packet.size());
             carte = packet.get(randomIndex);
-        } while (carte.getValeur().equals("AS") || carte.getValeur().equals("VALET") || carte.getValeur().equals("DIX")
-                || carte.getValeur().equals("SEPT") || carte.getValeur().equals("HUIT"));
+        } while (shouldContinue(carte));
         playedCard.add(carte);
         showFirstCard(carte);
         packet.remove(randomIndex);
+    }
+
+    private boolean shouldContinue(Card carte) {
+        return carte.getValeur().equals("AS") || carte.getValeur().equals("VALET") || carte.getValeur().equals("DIX")
+                || carte.getValeur().equals("SEPT") || carte.getValeur().equals("HUIT");
     }
 
     /**
